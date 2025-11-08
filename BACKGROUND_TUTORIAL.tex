@@ -846,6 +846,524 @@ Manipulator control
     \end{itemize}
 \end{enumerate}
 
+\section{Solved Examples: From Simple to Advanced}
+
+This section contains 6 worked examples to help you understand orbital mechanics and space debris removal concepts. Each example includes a detailed, step-by-step solution explained in simple terms.
+
+\subsection{Example 1: Calculating Orbital Velocity (EASY)}
+
+\begin{tcolorbox}[colback=green!5!white,colframe=green!60!black,title=Problem]
+A satellite is orbiting Earth at an altitude of 400 km. What is its orbital velocity?
+
+\textbf{Given:}
+\begin{itemize}[nosep]
+    \item Altitude: $h = 400$ km
+    \item Earth's radius: $R_E = 6371$ km
+    \item Gravitational parameter: $\mu = 398600$ km$^3$/s$^2$
+\end{itemize}
+\end{tcolorbox}
+
+\textbf{ELI10 Concept:} Think of a satellite like a ball on a string that you're swinging around your head. The faster you swing it, the harder it pulls outward. In space, gravity is like that string pulling the satellite inward. The satellite needs to go just fast enough so that gravity's pull exactly balances its tendency to fly away. Too slow and it falls to Earth; too fast and it escapes into space!
+
+\textbf{Solution:}
+
+\textbf{Step 1:} Calculate orbital radius $r$ (distance from Earth's center)
+\begin{equation}
+r = R_E + h = 6371 + 400 = 6771 \text{ km}
+\end{equation}
+
+\textit{Why?} The satellite isn't orbiting at Earth's surface but 400 km above it. We measure orbits from Earth's center, not the surface, so we add the radius.
+
+\textbf{Step 2:} Use the orbital velocity formula
+\begin{equation}
+v = \sqrt{\frac{\mu}{r}} = \sqrt{\frac{398600}{6771}} = \sqrt{58.85} = 7.67 \text{ km/s}
+\end{equation}
+
+\textbf{Step 3:} Convert to more familiar units
+\begin{equation}
+v = 7.67 \times 3600 = 27,612 \text{ km/h} \approx 27,600 \text{ km/h}
+\end{equation}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!60!black,title=Answer]
+The satellite travels at \textbf{7.67 km/s} or about \textbf{27,600 km/h}! That's about 70 times faster than a commercial airplane. At this speed, the satellite completes one orbit around Earth in about 90 minutes.
+
+\textbf{Reality Check:} The International Space Station orbits at a similar altitude and travels at approximately this speed. You can actually see it passing overhead in the evening!
+\end{tcolorbox}
+
+\subsection{Example 2: How Long Does Orbit Take? (EASY-MEDIUM)}
+
+\begin{tcolorbox}[colback=green!5!white,colframe=green!60!black,title=Problem]
+Calculate the orbital period (time for one complete orbit) of a GPS satellite at an altitude of 20,200 km.
+
+\textbf{Given:}
+\begin{itemize}[nosep]
+    \item Altitude: $h = 20,200$ km
+    \item Earth's radius: $R_E = 6371$ km
+    \item $\mu = 398600$ km$^3$/s$^2$
+\end{itemize}
+\end{tcolorbox}
+
+\textbf{ELI10 Concept:} Imagine you're on a merry-go-round. If you stand close to the center, you go around quickly. If you stand at the edge, it takes longer to complete one rotation. Satellites work the same way -- the farther from Earth, the longer one orbit takes!
+
+\textbf{Solution:}
+
+\textbf{Step 1:} Calculate orbital radius
+\begin{equation}
+r = R_E + h = 6371 + 20200 = 26,571 \text{ km}
+\end{equation}
+
+\textbf{Step 2:} Calculate semi-major axis $a$ (for circular orbit, $a = r$)
+\begin{equation}
+a = 26,571 \text{ km}
+\end{equation}
+
+\textbf{Step 3:} Use Kepler's Third Law to find orbital period
+\begin{equation}
+T = 2\pi\sqrt{\frac{a^3}{\mu}} = 2\pi\sqrt{\frac{26571^3}{398600}}
+\end{equation}
+
+\textbf{Step 4:} Calculate step by step
+\begin{align}
+a^3 &= 26571^3 = 1.876 \times 10^{13} \text{ km}^3 \\
+\frac{a^3}{\mu} &= \frac{1.876 \times 10^{13}}{398600} = 4.707 \times 10^7 \text{ s}^2 \\
+\sqrt{\frac{a^3}{\mu}} &= \sqrt{4.707 \times 10^7} = 6859 \text{ s} \\
+T &= 2\pi \times 6859 = 43,082 \text{ s}
+\end{align}
+
+\textbf{Step 5:} Convert to hours
+\begin{equation}
+T = \frac{43082}{3600} = 11.97 \text{ hours} \approx 12 \text{ hours}
+\end{equation}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!60!black,title=Answer]
+The GPS satellite completes one orbit in \textbf{12 hours} (exactly 11 hours 58 minutes).
+
+\textbf{Cool Fact:} GPS satellites are designed so that exactly 2 complete orbits = 1 Earth day (24 hours). This means they appear in the same position in the sky every day at the same time. That's why your GPS can always find at least 4 satellites overhead!
+\end{tcolorbox}
+
+\subsection{Example 3: Hohmann Transfer - Moving Between Orbits (MEDIUM)}
+
+\begin{tcolorbox}[colback=green!5!white,colframe=green!60!black,title=Problem]
+A debris removal satellite needs to transfer from a 400 km altitude circular orbit to a 600 km altitude circular orbit to intercept a piece of space junk. Calculate the total $\Delta v$ required for this Hohmann transfer.
+
+\textbf{Given:}
+\begin{itemize}[nosep]
+    \item Initial orbit: $h_1 = 400$ km, so $r_1 = 6771$ km
+    \item Final orbit: $h_2 = 600$ km, so $r_2 = 6971$ km
+    \item $\mu = 398600$ km$^3$/s$^2$
+\end{itemize}
+\end{tcolorbox}
+
+\textbf{ELI10 Concept:} Imagine you're on a swing. To go higher, you need to push at just the right moment (at the bottom). In space, to change orbits, you fire your rocket engine at specific points. A Hohmann transfer is like taking the most fuel-efficient path -- it's like taking the "economy route" instead of the direct but expensive route!
+
+\textbf{Solution:}
+
+\textbf{Step 1:} Calculate velocities in the initial circular orbit
+\begin{equation}
+v_1 = \sqrt{\frac{\mu}{r_1}} = \sqrt{\frac{398600}{6771}} = 7.67 \text{ km/s}
+\end{equation}
+
+\textbf{Step 2:} Calculate velocities in the final circular orbit
+\begin{equation}
+v_2 = \sqrt{\frac{\mu}{r_2}} = \sqrt{\frac{398600}{6971}} = 7.56 \text{ km/s}
+\end{equation}
+
+\textit{Notice:} The higher orbit is slower! This seems weird but remember -- farther from Earth means weaker gravity pull, so less speed needed to stay in orbit.
+
+\textbf{Step 3:} Calculate semi-major axis of the transfer ellipse
+\begin{equation}
+a_t = \frac{r_1 + r_2}{2} = \frac{6771 + 6971}{2} = 6871 \text{ km}
+\end{equation}
+
+\textbf{Step 4:} Calculate velocity at periapsis (low point) of transfer orbit using vis-viva equation
+\begin{equation}
+v_{t1} = \sqrt{\mu\left(\frac{2}{r_1} - \frac{1}{a_t}\right)} = \sqrt{398600\left(\frac{2}{6771} - \frac{1}{6871}\right)} = 7.73 \text{ km/s}
+\end{equation}
+
+\textbf{Step 5:} Calculate velocity at apoapsis (high point) of transfer orbit
+\begin{equation}
+v_{t2} = \sqrt{\mu\left(\frac{2}{r_2} - \frac{1}{a_t}\right)} = \sqrt{398600\left(\frac{2}{6971} - \frac{1}{6871}\right)} = 7.50 \text{ km/s}
+\end{equation}
+
+\textbf{Step 6:} Calculate the two $\Delta v$ burns
+\begin{align}
+\Delta v_1 &= v_{t1} - v_1 = 7.73 - 7.67 = 0.06 \text{ km/s} = 60 \text{ m/s} \\
+\Delta v_2 &= v_2 - v_{t2} = 7.56 - 7.50 = 0.06 \text{ km/s} = 60 \text{ m/s}
+\end{align}
+
+\textbf{Step 7:} Total $\Delta v$ required
+\begin{equation}
+\Delta v_{total} = \Delta v_1 + \Delta v_2 = 60 + 60 = 120 \text{ m/s}
+\end{equation}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!60!black,title=Answer]
+The total velocity change needed is \textbf{120 m/s}.
+
+\textbf{What this means:} You fire your thrusters for a few seconds at the bottom of your orbit to speed up by 60 m/s, coast for about 45 minutes on the transfer ellipse, then fire again at the top to slow down by 60 m/s.
+
+\textbf{Fuel cost:} Using the rocket equation with typical spacecraft ($v_e \approx 3000$ m/s), this requires about 4\% of your spacecraft's mass in propellant. That's why fuel is precious in space!
+\end{tcolorbox}
+
+\subsection{Example 4: Relative Motion - Catching Up to Debris (MEDIUM-HARD)}
+
+\begin{tcolorbox}[colback=green!5!white,colframe=green!60!black,title=Problem]
+Your debris removal spacecraft is 100 m behind a tumbling satellite in the same circular orbit at 500 km altitude. If you apply a constant 0.1 N thrust forward for 60 seconds (spacecraft mass = 500 kg), what happens to your relative position?
+
+\textbf{Given:}
+\begin{itemize}[nosep]
+    \item Initial separation: $y_0 = -100$ m (you're behind)
+    \item Thrust: $F = 0.1$ N for $t = 60$ s
+    \item Mass: $m = 500$ kg
+    \item Orbit radius: $r = 6871$ km
+\end{itemize}
+\end{tcolorbox}
+
+\textbf{ELI10 Concept:} This is the weird part of orbital mechanics! In space, if you speed up to catch something in front of you, you actually end up going to a higher orbit and moving SLOWER, so you fall behind! It's like trying to run on a circular treadmill -- pushing forward makes you move outward, not forward. This is why approaching space debris is so tricky!
+
+\textbf{Solution:}
+
+\textbf{Step 1:} Calculate orbital angular velocity $n$
+\begin{equation}
+n = \sqrt{\frac{\mu}{r^3}} = \sqrt{\frac{398600}{6871^3}} = 0.001115 \text{ rad/s}
+\end{equation}
+
+\textbf{Step 2:} Calculate acceleration from thrust
+\begin{equation}
+a_y = \frac{F}{m} = \frac{0.1}{500} = 0.0002 \text{ m/s}^2
+\end{equation}
+
+\textbf{Step 3:} Calculate velocity change during burn
+\begin{equation}
+\Delta v_y = a_y \times t = 0.0002 \times 60 = 0.012 \text{ m/s}
+\end{equation}
+
+\textbf{Step 4:} Use HCW equations for along-track motion
+For constant thrust in the along-track ($y$) direction, the solution is:
+\begin{equation}
+y(t) = y_0 + \frac{3n a_y}{2n^2}(1 - \cos(nt)) + \frac{\Delta v_y}{n}\sin(nt)
+\end{equation}
+
+After the 60 s burn stops, we have:
+\begin{align}
+\dot{y}(60) &= \Delta v_y = 0.012 \text{ m/s} \\
+y(60) &= -100 + \text{(small change during burn)} \approx -99.3 \text{ m}
+\end{align}
+
+\textbf{Step 5:} Predict long-term motion (after burn stops)
+The HCW equations show that with this velocity, you'll continue in a sinusoidal relative trajectory:
+\begin{equation}
+y(t) = -99.3 + \frac{0.012}{0.001115}\sin(0.001115 \times t) = -99.3 + 10.8\sin(0.001115t)
+\end{equation}
+
+\textbf{Step 6:} Key insight - radial coupling
+Because you thrust along-track, the HCW coupling term ($2n\dot{y}$) causes you to also move radially:
+\begin{equation}
+x(t) = \frac{2\Delta v_y}{n} = \frac{2 \times 0.012}{0.001115} = 21.5 \text{ m above the target}
+\end{equation}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!60!black,title=Answer]
+\textbf{Surprising result:} After your burn:
+\begin{itemize}[nosep]
+    \item You move to an orbit \textbf{21.5 m higher} than the debris
+    \item You oscillate forward and backward relative to it with amplitude $\pm$10.8 m
+    \item You don't simply move forward -- you create an elliptical relative trajectory!
+\end{itemize}
+
+\textbf{What really happened:} By pushing forward, you raised your orbit slightly. Higher orbits are slower, so now you drift backward! The relative motion creates a natural ellipse in the rotating frame.
+
+\textbf{Lesson for debris removal:} To approach from behind, you paradoxically need to thrust \textit{backward} to drop into a lower, faster orbit, then coast up to meet the target. Counter-intuitive, but that's orbital mechanics!
+\end{tcolorbox}
+
+\subsection{Example 5: Detumbling a Satellite (HARD)}
+
+\begin{tcolorbox}[colback=green!5!white,colframe=green!60!black,title=Problem]
+A defunct satellite (500 mm cube, mass = 50 kg) is tumbling with angular velocity $\boldsymbol{\omega} = [0.1, 0.05, 0.15]$ rad/s. You want to reduce its tumbling to less than 0.01 rad/s in all axes using an ion beam that can apply 0.001 N·m of torque. How long will it take, and what's the strategy?
+
+\textbf{Given:}
+\begin{itemize}[nosep]
+    \item Satellite: 0.5 m cube, mass $m = 50$ kg
+    \item Initial angular velocity: $\boldsymbol{\omega}_0 = [0.1, 0.05, 0.15]$ rad/s
+    \item Target: $|\boldsymbol{\omega}| < 0.01$ rad/s
+    \item Available torque: $\tau_{max} = 0.001$ N·m
+\end{itemize}
+\end{tcolorbox}
+
+\textbf{ELI10 Concept:} Imagine a spinning ice skater. To stop spinning, they extend their arms (spreads out their mass). For a satellite, we can't change its shape, but we can apply a tiny "brake" force continuously. It's like gradually slowing down a spinning top by gently pressing your finger on it, except in space we use a beam of ions (charged particles) instead of your finger!
+
+\textbf{Solution:}
+
+\textbf{Step 1:} Calculate moment of inertia for a cube
+For a uniform cube with side length $L = 0.5$ m:
+\begin{equation}
+I = \frac{1}{6}mL^2 = \frac{1}{6} \times 50 \times 0.5^2 = 2.08 \text{ kg·m}^2
+\end{equation}
+
+Assuming principal axes align with cube edges: $I_1 = I_2 = I_3 = I = 2.08$ kg·m$^2$
+
+\textbf{Step 2:} Calculate initial angular momentum magnitude
+\begin{align}
+|\mathbf{L}_0| &= I|\boldsymbol{\omega}_0| = I\sqrt{\omega_x^2 + \omega_y^2 + \omega_z^2} \\
+&= 2.08\sqrt{0.1^2 + 0.05^2 + 0.15^2} \\
+&= 2.08\sqrt{0.0325} = 2.08 \times 0.180 = 0.375 \text{ kg·m}^2\text{/s}
+\end{align}
+
+\textbf{Step 3:} Calculate final angular momentum (target state)
+\begin{equation}
+|\mathbf{L}_f| = I \times 0.01 = 2.08 \times 0.01 = 0.0208 \text{ kg·m}^2\text{/s}
+\end{equation}
+
+\textbf{Step 4:} Angular momentum to be removed
+\begin{equation}
+\Delta L = |\mathbf{L}_0| - |\mathbf{L}_f| = 0.375 - 0.0208 = 0.354 \text{ kg·m}^2\text{/s}
+\end{equation}
+
+\textbf{Step 5:} Time required with constant torque
+Using $\tau = \Delta L / \Delta t$:
+\begin{equation}
+\Delta t = \frac{\Delta L}{\tau_{max}} = \frac{0.354}{0.001} = 354 \text{ seconds} \approx 6 \text{ minutes}
+\end{equation}
+
+\textbf{Step 6:} Optimal detumbling strategy
+
+The best approach is to apply torque opposite to the instantaneous angular momentum vector:
+\begin{equation}
+\boldsymbol{\tau}(t) = -\tau_{max} \frac{\boldsymbol{\omega}(t)}{|\boldsymbol{\omega}(t)|}
+\end{equation}
+
+This means:
+\begin{enumerate}
+    \item Measure current $\boldsymbol{\omega}$ using cameras/LIDAR
+    \item Point ion beam opposite to rotation direction
+    \item Update pointing every few seconds as rotation slows
+    \item Continue until all components $< 0.01$ rad/s
+\end{enumerate}
+
+\textbf{Step 7:} Energy dissipated
+\begin{align}
+E_0 &= \frac{1}{2}I|\boldsymbol{\omega}_0|^2 = \frac{1}{2} \times 2.08 \times 0.180^2 = 0.034 \text{ J} \\
+E_f &= \frac{1}{2}I|\boldsymbol{\omega}_f|^2 = \frac{1}{2} \times 2.08 \times 0.01^2 = 0.0001 \text{ J} \\
+\Delta E &= 0.034 - 0.0001 \approx 0.034 \text{ J}
+\end{align}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!60!black,title=Answer]
+\textbf{Time required:} Approximately \textbf{6 minutes} of continuous ion beam operation.
+
+\textbf{Strategy:}
+\begin{enumerate}[nosep]
+    \item Track satellite rotation using sensors (every 0.5 s)
+    \item Compute instantaneous spin axis direction
+    \item Point ion beam opposite to spin direction
+    \item Apply maximum torque (0.001 N·m)
+    \item Update beam direction as satellite slows
+    \item Stop when all rotation rates $< 0.01$ rad/s
+\end{enumerate}
+
+\textbf{Challenges:}
+\begin{itemize}[nosep]
+    \item Must continuously track a tumbling object
+    \item Ion beam pointing must be very accurate ($< 1°$)
+    \item Need to avoid creating new tumbling modes
+    \item Must maintain safe distance (5-10 m) during operation
+\end{itemize}
+
+\textbf{Real-world note:} This is actually optimistic! Real debris might have unknown mass distribution, making $I$ uncertain. Also, solar radiation pressure and gravity gradients can disturb the process. Actual detumbling missions might take 10-15 minutes.
+\end{tcolorbox}
+
+\subsection{Example 6: Complete ADR Mission Planning (VERY HARD)}
+
+\begin{tcolorbox}[colback=green!5!white,colframe=green!60!black,title=Problem - Multi-Part Mission}
+Plan a complete Active Debris Removal (ADR) mission:
+
+\textbf{Initial State:}
+\begin{itemize}[nosep]
+    \item Your chaser spacecraft: 400 km altitude circular orbit, inclination = 51.6°
+    \item Debris (500 mm cube): 600 km altitude circular orbit, inclination = 51.6°, tumbling at 0.12 rad/s
+    \item Chaser mass: 800 kg, fuel: 200 kg, $I_{sp} = 300$ s (chemical thruster)
+    \item Time constraint: Complete mission in 48 hours
+\end{itemize}
+
+\textbf{Mission phases:}
+\begin{enumerate}[nosep]
+    \item Hohmann transfer to debris altitude
+    \item Approach to 50 m distance
+    \item Detumble debris
+    \item Capture using robotic arm
+    \item Deorbit to 250 km altitude (burns up in weeks)
+\end{enumerate}
+
+Calculate total $\Delta v$ budget and verify mission feasibility.
+\end{tcolorbox}
+
+\textbf{ELI10 Concept:} This is like planning a complete rescue mission in space! You need to: (1) drive your spaceship to the right highway (transfer orbits), (2) carefully approach the broken satellite (proximity operations), (3) stop it from spinning (detumbling), (4) grab it with a robot arm (capture), and (5) push it down toward Earth where it'll burn up safely (deorbit). Every step needs careful planning because you have limited fuel and time!
+
+\textbf{Solution:}
+
+\textbf{PHASE 1: Hohmann Transfer (400 km $\rightarrow$ 600 km)}
+
+From Example 3, we know:
+\begin{equation}
+\Delta v_{transfer} = \Delta v_1 + \Delta v_2 = 120 \text{ m/s}
+\end{equation}
+
+Transfer time (half orbital period of transfer ellipse):
+\begin{align}
+a_t &= \frac{6771 + 6971}{2} = 6871 \text{ km} \\
+T_t &= 2\pi\sqrt{\frac{a_t^3}{\mu}} = 2\pi\sqrt{\frac{6871^3}{398600}} = 5525 \text{ s} \\
+t_{transfer} &= \frac{T_t}{2} = 2763 \text{ s} \approx 46 \text{ minutes}
+\end{align}
+
+\textbf{PHASE 2: Approach from 10 km to 50 m}
+
+Starting separation: 10 km along-track (phasing error after transfer)
+
+Use V-bar approach (safer): Multiple small burns over several orbits
+\begin{itemize}[nosep]
+    \item Small $\Delta v$ to drop slightly below target: 2 m/s
+    \item Coast for 2-3 orbits to catch up: 3 hours
+    \item Small $\Delta v$ to raise back to target: 2 m/s
+    \item Final approach burns (several iterations): 6 m/s
+\end{itemize}
+
+\begin{equation}
+\Delta v_{approach} \approx 10 \text{ m/s}, \quad t_{approach} \approx 6 \text{ hours}
+\end{equation}
+
+\textbf{PHASE 3: Detumbling}
+
+From Example 5, with better thrusters:
+\begin{equation}
+t_{detumble} \approx 15 \text{ minutes}
+\end{equation}
+
+Station-keeping during detumbling (maintaining 50 m distance):
+\begin{equation}
+\Delta v_{station} \approx 5 \text{ m/s}, \quad t_{detumble} = 15 \text{ min}
+\end{equation}
+
+\textbf{PHASE 4: Capture}
+
+Final approach (50 m $\rightarrow$ contact):
+\begin{itemize}[nosep]
+    \item Slow, controlled approach: 0.1 m/s approach velocity
+    \item Multiple correction burns: 3 m/s total
+    \item Time: 10 minutes
+\end{itemize}
+
+\begin{equation}
+\Delta v_{capture} \approx 3 \text{ m/s}, \quad t_{capture} = 10 \text{ min}
+\end{equation}
+
+\textbf{PHASE 5: Deorbit (600 km $\rightarrow$ 250 km)}
+
+Combined mass: $m_{total} = 800 + 50 = 850$ kg
+
+Calculate $\Delta v$ for deorbit burn:
+\begin{align}
+r_1 &= 6971 \text{ km (current orbit)} \\
+r_2 &= 6621 \text{ km (target perigee)} \\
+a_d &= \frac{r_1 + r_2}{2} = 6796 \text{ km}
+\end{align}
+
+Velocity at 600 km altitude:
+\begin{equation}
+v_1 = \sqrt{\frac{398600}{6971}} = 7.56 \text{ km/s}
+\end{equation}
+
+Velocity needed for deorbit ellipse at periapsis:
+\begin{equation}
+v_{d} = \sqrt{398600\left(\frac{2}{6971} - \frac{1}{6796}\right)} = 7.42 \text{ km/s}
+\end{equation}
+
+\begin{equation}
+\Delta v_{deorbit} = v_1 - v_{d} = 7.56 - 7.42 = 0.14 \text{ km/s} = 140 \text{ m/s}
+\end{equation}
+
+\textbf{TOTAL MISSION BUDGET}
+
+\begin{align}
+\Delta v_{total} &= \Delta v_{transfer} + \Delta v_{approach} + \Delta v_{station} + \Delta v_{capture} + \Delta v_{deorbit} \\
+&= 120 + 10 + 5 + 3 + 140 \\
+&= 278 \text{ m/s}
+\end{align}
+
+\textbf{Fuel Requirement Check}
+
+Using Tsiolkovsky equation:
+\begin{equation}
+\Delta v = v_e \ln\left(\frac{m_0}{m_f}\right) = g \cdot I_{sp} \cdot \ln\left(\frac{m_0}{m_f}\right)
+\end{equation}
+
+where $v_e = g \cdot I_{sp} = 9.81 \times 300 = 2943$ m/s
+
+After capturing debris, total mass = 850 kg, including remaining fuel.
+
+Required mass ratio:
+\begin{equation}
+\frac{m_0}{m_f} = e^{\Delta v / v_e} = e^{278/2943} = e^{0.0944} = 1.099
+\end{equation}
+
+Fuel needed for deorbit:
+\begin{equation}
+m_{fuel,deorbit} = m_{total}(1.099 - 1) / 1.099 = 850 \times 0.090 = 76.5 \text{ kg}
+\end{equation}
+
+For all mission phases (working backwards):
+\begin{itemize}[nosep]
+    \item Initial mass: 800 kg
+    \item Fuel available: 200 kg
+    \item Fuel for transfer + approach: $\sim$40 kg
+    \item Remaining after capture: $\sim$160 kg
+    \item Fuel needed for deorbit: 76.5 kg
+    \item \textbf{Margin: $\sim$80 kg (40\%)} $\checkmark$
+\end{itemize}
+
+\textbf{Timeline Check}
+
+\begin{align}
+t_{total} &= t_{transfer} + t_{approach} + t_{detumble} + t_{capture} + t_{deorbit} \\
+&= 46\text{ min} + 6\text{ hr} + 15\text{ min} + 10\text{ min} + 5\text{ min} \\
+&\approx 7.5 \text{ hours}
+\end{align}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!60!black,title=Final Answer - Mission Feasibility]
+\textbf{Mission: FEASIBLE} $\checkmark$
+
+\textbf{Summary:}
+\begin{itemize}[nosep]
+    \item Total $\Delta v$ required: \textbf{278 m/s}
+    \item Fuel needed: \textbf{$\sim$120 kg} (60\% of available)
+    \item Safety margin: \textbf{40\%} (good for uncertainties)
+    \item Total mission time: \textbf{7.5 hours} (well within 48 hr limit)
+    \item Debris disposal: Perigee at 250 km $\rightarrow$ natural decay in 2-4 weeks
+\end{itemize}
+
+\textbf{Critical Success Factors:}
+\begin{enumerate}[nosep]
+    \item Accurate orbit determination ($< 100$ m error)
+    \item Successful detumbling (otherwise capture fails)
+    \item Robust control during capture (free-floating base dynamics)
+    \item Contingency fuel reserve for emergencies (40\% margin)
+\end{enumerate}
+
+\textbf{Risk Factors:}
+\begin{itemize}[nosep]
+    \item Debris might fragment during capture (use gentle approach)
+    \item Solar radiation pressure affects trajectory ($\sim$1 m/s over 48 hr)
+    \item Sensor failures require backup navigation
+    \item Combined system might be unstable after capture (need active control)
+\end{itemize}
+
+\textbf{Why this works:} The 40\% fuel margin gives us room for:
+\begin{itemize}[nosep]
+    \item Unexpected maneuvers during approach
+    \item Longer detumbling time if debris is worse than expected
+    \item Multiple capture attempts if first one fails
+    \item Emergency abort back to safe orbit
+\end{itemize}
+
+This is a realistic ADR mission profile similar to those being planned by ESA's ClearSpace-1 and other upcoming debris removal missions!
+\end{tcolorbox}
+
 \section{Key Equations Cheat Sheet}
 
 \subsection{Orbital Mechanics}
