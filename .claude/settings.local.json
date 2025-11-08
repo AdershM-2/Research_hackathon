@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(where:*)",
+      "Bash(python convert_to_pdf.py:*)",
+      "Bash(python convert_to_pdf_reportlab.py:*)",
+      "Bash(pdflatex:*)",
+      "Bash(del BACKGROUND_TUTORIAL.aux BACKGROUND_TUTORIAL.log BACKGROUND_TUTORIAL.out BACKGROUND_TUTORIAL.toc 2)",
+      "Bash(nul)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

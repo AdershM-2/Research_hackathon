@@ -1,0 +1,962 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,decorations.markings,calc,angles,quotes}
+
+% Page geometry
+\geometry{margin=2.5cm}
+
+% Colors
+\definecolor{titlecolor}{RGB}{44,62,80}
+\definecolor{sectioncolor}{RGB}{52,73,94}
+\definecolor{codebackground}{RGB}{244,244,244}
+\definecolor{codeborder}{RGB}{52,152,219}
+\definecolor{emphcolor}{RGB}{231,76,60}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Space Debris Removal - Background Tutorial}
+\fancyhead[R]{\small IIT Kanpur Hackathon 2025}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Title formatting
+\titleformat{\section}
+{\color{titlecolor}\Large\bfseries}
+{\thesection}{1em}{}[\vspace{-0.5em}\color{codeborder}\titlerule]
+
+\titleformat{\subsection}
+{\color{sectioncolor}\large\bfseries}
+{\thesubsection}{1em}{}
+
+\titleformat{\subsubsection}
+{\color{sectioncolor}\normalsize\bfseries}
+{\thesubsubsection}{1em}{}
+
+% Code listing style
+\lstset{
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{codebackground},
+    frame=single,
+    framerule=1pt,
+    rulecolor=\color{codeborder},
+    breaklines=true,
+    columns=fullflexible,
+    keepspaces=true,
+    xleftmargin=10pt,
+    xrightmargin=10pt,
+    framexleftmargin=5pt,
+    framexrightmargin=5pt,
+}
+
+% Hyperlink setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue
+}
+
+\begin{document}
+
+% Title page
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+
+    {\Huge\bfseries\color{titlecolor} Space Debris Removal\par}
+    \vspace{0.5cm}
+    {\LARGE\color{sectioncolor} Background for Robotics \& Controls Engineers\par}
+    \vspace{2cm}
+
+    {\Large IIT Kanpur Research Symposium 2025\par}
+    \vspace{0.5cm}
+    {\large 24-Hour Hackathon\par}
+
+    \vfill
+
+    {\large Theme: Aerospace, Space Science \& Engineering\par}
+    \vspace{0.5cm}
+    {\large Mission Concept for Mitigating Space Debris in LEO\par}
+
+    \vspace{1cm}
+    {\large \today\par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Space Debris Problem Overview}
+
+\subsection{What is Space Debris?}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Defunct satellites}: No longer operational spacecraft
+    \item \textbf{Rocket bodies}: Upper stages left in orbit
+    \item \textbf{Fragmentation debris}: Pieces from collisions and explosions
+    \item \textbf{Mission-related objects}: Lens caps, separation mechanisms, etc.
+\end{itemize}
+
+\subsection{LEO Characteristics}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Altitude}: 200--2000 km above Earth
+    \item \textbf{Orbital velocity}: $\sim$7.8 km/s (28,000 km/h!)
+    \item \textbf{Orbital period}: $\sim$90--120 minutes
+    \item \textbf{Atmospheric drag}: Still present, causes gradual decay
+\end{itemize}
+
+\subsection{Why It Matters}
+
+\begin{itemize}[leftmargin=*]
+    \item Over 34,000 tracked objects $>$10 cm
+    \item $\sim$1 million objects between 1--10 cm
+    \item Collision at orbital speeds can destroy spacecraft
+    \item Even small debris (1 cm) can be catastrophic
+\end{itemize}
+
+\section{Orbital Mechanics Fundamentals}
+
+\subsection{Kepler's Laws}
+
+As a controls engineer, you need to understand that satellites follow predictable paths:
+
+\subsubsection{Elliptical Orbits}
+\begin{itemize}[leftmargin=*]
+    \item Orbits are ellipses with Earth at one focus
+    \item Described by semi-major axis ($a$) and eccentricity ($e$)
+\end{itemize}
+
+\subsubsection{Orbital Parameters (State Vector)}
+
+\begin{lstlisting}
+Position: [x, y, z]
+Velocity: [vx, vy, vz]
+\end{lstlisting}
+
+Or using \textbf{Keplerian Elements}:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{$a$}: Semi-major axis (orbit size)
+    \item \textbf{$e$}: Eccentricity (orbit shape: 0 = circular, $<$1 = ellipse)
+    \item \textbf{$i$}: Inclination (tilt relative to equator)
+    \item \textbf{$\Omega$}: Right Ascension of Ascending Node (RAAN)
+    \item \textbf{$\omega$}: Argument of Periapsis
+    \item \textbf{$\nu$}: True Anomaly (position in orbit)
+\end{itemize}
+
+\begin{figure}[htbp]
+\centering
+
+% Define colors globally for this figure
+\definecolor{orbitcolor}{RGB}{52,152,219}
+\definecolor{earthcolor}{RGB}{46,125,50}
+\definecolor{equatorcolor}{RGB}{255,152,0}
+\definecolor{refcolor}{RGB}{158,158,158}
+
+\begin{tikzpicture}[scale=1.1, >=Stealth]
+
+    % Equatorial plane (reference plane)
+    \fill[equatorcolor!10] (0,0) ellipse (4.2cm and 0.45cm);
+    \draw[equatorcolor, very thick, dashed] (0,0) ellipse (4.2cm and 0.45cm);
+
+    % Reference direction (Vernal Equinox)
+    \draw[->, refcolor, very thick] (0,0) -- (4.5,0) node[right, font=\normalsize] {$\gamma$};
+
+    % Earth at focus
+    \shade[ball color=earthcolor] (0,0) circle (0.3cm);
+
+    % Orbital ellipse (tilted for 3D effect)
+    \begin{scope}[rotate=15, yshift=0.3cm]
+        % Draw the orbit
+        \draw[orbitcolor, line width=2pt] (0,0) ellipse (3.3cm and 2.1cm);
+
+        % Periapsis point
+        \filldraw[red!70!black] (-3.3,0) circle (2.5pt);
+
+        % Apoapsis point
+        \filldraw[red!70!black] (3.3,0) circle (2.5pt);
+
+        % Semi-major axis (a)
+        \draw[<->, blue!80!black, very thick] (-3.3,-0.6) -- (3.3,-0.6);
+        \node[blue!80!black, font=\Large\bfseries] at (0,-0.9) {$a$};
+
+        % Ascending node
+        \filldraw[green!50!black] (2.7,-1.25) circle (3pt);
+
+        % Descending node
+        \filldraw[green!30!black] (-2.7,1.25) circle (2pt);
+
+        % Line of nodes (dashed)
+        \draw[green!40!black, dashed, thick] (-3.3,1.5) -- (3.3,-1.5);
+
+        % Satellite position
+        \filldraw[orange!80!black] (1.7,1.4) circle (3.5pt);
+
+        % True anomaly (ν) - angle from periapsis to satellite
+        \draw[->, violet!80!black, very thick] (0,0) -- (1.7,1.4);
+        \draw[violet!80!black, very thick, ->] (1.1,0) arc (0:40:1.1);
+        \node[violet!80!black, font=\Large\bfseries] at (1.4,0.45) {$\nu$};
+
+        % Argument of periapsis (ω)
+        \draw[brown!80!black, very thick, ->] (1.4,-0.65) arc (-25:175:0.75);
+        \node[brown!80!black, font=\Large\bfseries] at (-0.6,-0.95) {$\omega$};
+    \end{scope}
+
+    % Inclination angle (i)
+    \draw[red!80!black, very thick, ->] (2.8,0.1) arc (5:25:2.8);
+    \node[red!80!black, font=\Large\bfseries] at (3.3,0.7) {$i$};
+
+    % RAAN (Ω)
+    \draw[green!50!black, very thick, ->] (3.2,0) arc (0:-32:3.2);
+    \node[green!50!black, font=\Large\bfseries] at (3.7,-1.0) {$\Omega$};
+
+    % North direction indicator
+    \draw[->, thick, gray!80!black] (-4.5,2.2) -- (-4.5,3.0);
+    \node[gray!80!black, left, font=\small] at (-4.5,2.6) {$z$};
+
+\end{tikzpicture}
+
+\vspace{0.3cm}
+
+% Legend below the figure
+\begin{tcolorbox}[colback=blue!5!white,colframe=codeborder,width=0.95\textwidth,arc=2mm]
+\small
+\textbf{Legend:}
+\begin{itemize}[leftmargin=*, nosep]
+    \item \textcolor{earthcolor}{\textbf{Green sphere}}: Earth (at focus of ellipse)
+    \item \textcolor{equatorcolor}{\textbf{Orange dashed ellipse}}: Equatorial plane (reference plane)
+    \item \textcolor{orbitcolor}{\textbf{Blue ellipse}}: Orbital plane (satellite's path)
+    \item \textcolor{refcolor}{$\gamma$}: Vernal equinox direction (reference for $\Omega$)
+    \item \textcolor{orange!80!black}{\textbf{Orange dot}}: Satellite position
+    \item \textcolor{red!70!black}{\textbf{Red dots}}: Periapsis (closest) and apoapsis (farthest) points
+    \item \textcolor{green!50!black}{\textbf{Green dots}}: Ascending node (orbit crosses equatorial plane going north)
+\end{itemize}
+
+\textbf{Six Keplerian Elements:}
+\begin{itemize}[leftmargin=*, nosep]
+    \item \textcolor{blue!80!black}{$a$}: \textbf{Semi-major axis} -- size of orbit (average radius)
+    \item $e$: \textbf{Eccentricity} -- shape of orbit (0 = circle, $<$1 = ellipse); shown by ellipse elongation
+    \item \textcolor{red!80!black}{$i$}: \textbf{Inclination} -- tilt angle between orbital plane and equatorial plane
+    \item \textcolor{green!50!black}{$\Omega$}: \textbf{Right Ascension of Ascending Node (RAAN)} -- angle from $\gamma$ to ascending node
+    \item \textcolor{brown!80!black}{$\omega$}: \textbf{Argument of periapsis} -- angle from ascending node to periapsis
+    \item \textcolor{violet!80!black}{$\nu$}: \textbf{True anomaly} -- angle from periapsis to satellite (changes with time)
+\end{itemize}
+\end{tcolorbox}
+
+\caption{Keplerian Orbital Elements in 3D perspective. The six elements ($a, e, i, \Omega, \omega, \nu$) uniquely define a satellite's position and velocity at any time.}
+\label{fig:keplerian}
+\end{figure}
+
+\subsection{Two-Body Problem}
+
+The fundamental equation of orbital motion:
+
+\begin{equation}
+\ddot{\mathbf{r}} = -\frac{\mu}{r^3} \mathbf{r}
+\end{equation}
+
+Where:
+\begin{itemize}[leftmargin=*]
+    \item $\mu = GM$ (gravitational parameter of Earth = 398,600 km$^3$/s$^2$)
+    \item $\mathbf{r}$ = position vector
+    \item $\ddot{\mathbf{r}}$ = acceleration
+\end{itemize}
+
+\begin{tcolorbox}[colback=yellow!10!white,colframe=emphcolor,title=Key Insight for Controls]
+In orbit, there's no friction! Any velocity change is permanent unless you apply another force.
+\end{tcolorbox}
+
+\subsection{Hohmann Transfer}
+
+To change orbits efficiently:
+\begin{enumerate}
+    \item Apply $\Delta v$ at periapsis to raise apoapsis
+    \item Coast to new apoapsis
+    \item Apply $\Delta v$ to circularize
+\end{enumerate}
+
+\textbf{Critical for your problem:} Rendezvous requires matching both position AND velocity!
+
+\section{The Kessler Syndrome}
+
+\subsection{The Cascading Collision Problem}
+
+Named after NASA scientist Donald Kessler (1978), this is the critical threat:
+
+\begin{enumerate}
+    \item Two objects collide at $\sim$15 km/s relative velocity
+    \item Collision creates thousands of new debris fragments
+    \item Each fragment can cause more collisions
+    \item \textbf{Exponential growth} of debris population
+    \item Eventually, LEO becomes unusable (chain reaction)
+\end{enumerate}
+
+\subsection{Current Risk Level}
+
+\begin{itemize}[leftmargin=*]
+    \item We're approaching the critical density threshold
+    \item Some orbits (800--1000 km) are already at risk
+    \item Mega-constellations (Starlink: 42,000 satellites planned) increase risk
+\end{itemize}
+
+\subsection{Why Active Removal is Needed}
+
+\begin{itemize}[leftmargin=*]
+    \item Natural decay takes decades-to-centuries in LEO
+    \item Atmospheric drag only significant below $\sim$600 km
+    \item We need to remove $\sim$5--10 large objects per year to stabilize
+\end{itemize}
+
+\section{Spacecraft Dynamics \& Control in Space}
+
+\subsection{Attitude Dynamics (Rotation)}
+
+\textbf{Euler's Rotational Equation:}
+
+\begin{equation}
+\mathbf{I} \cdot \dot{\boldsymbol{\omega}} + \boldsymbol{\omega} \times (\mathbf{I} \cdot \boldsymbol{\omega}) = \boldsymbol{\tau}
+\end{equation}
+
+Where:
+\begin{itemize}[leftmargin=*]
+    \item $\mathbf{I}$ = Moment of inertia tensor (3$\times$3 matrix)
+    \item $\boldsymbol{\omega}$ = Angular velocity vector
+    \item $\boldsymbol{\tau}$ = Applied torque
+\end{itemize}
+
+\textbf{Attitude Representation:}
+\begin{itemize}[leftmargin=*]
+    \item Euler angles (intuitive but have singularities)
+    \item Quaternions (4 parameters, no singularities -- preferred!)
+    \item Rotation matrices (9 parameters, redundant)
+\end{itemize}
+
+\subsection{Actuators in Space}
+
+\subsubsection{For Translation ($\Delta v$):}
+
+\textbf{1. Thrusters}: Chemical or electric propulsion
+\begin{itemize}[leftmargin=*]
+    \item Impulse: $\Delta v = v_e \cdot \ln(m_0/m_f)$ -- Tsiolkovsky equation
+    \item Fuel limited!
+\end{itemize}
+
+\subsubsection{For Rotation (torque):}
+
+\begin{enumerate}
+    \item \textbf{Reaction Wheels}: Spin internal mass, conserve angular momentum
+    \begin{itemize}
+        \item Fast, precise, can saturate (need desaturation)
+    \end{itemize}
+
+    \item \textbf{Control Moment Gyroscopes (CMGs)}: Gimbaled spinning wheels
+    \begin{itemize}
+        \item Higher torque than reaction wheels
+    \end{itemize}
+
+    \item \textbf{Magnetic Torquers}: Interact with Earth's magnetic field
+    \begin{itemize}
+        \item Slow, only certain directions, free propellant
+    \end{itemize}
+
+    \item \textbf{Thrusters}: Fast but uses fuel
+\end{enumerate}
+
+\subsection{Key Control Challenges}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Underactuated system}: Limited fuel, must be efficient
+    \item \textbf{Coupled dynamics}: Translation-rotation coupling during capture
+    \item \textbf{Long time delays}: Ground communication $\sim$1 second delay
+    \item \textbf{Sensor noise}: Star trackers, gyros, GPS in space
+\end{itemize}
+
+\section{Rendezvous and Proximity Operations (RPO)}
+
+\subsection{The Four Phases of Rendezvous}
+
+\textbf{Phase 1: Phasing (Far Range, $>$100 km)}
+\begin{itemize}[leftmargin=*]
+    \item Match orbital plane (inclination)
+    \item Adjust orbit to approach target
+    \item Use ground-based tracking
+\end{itemize}
+
+\textbf{Phase 2: Approach (10--100 km)}
+\begin{itemize}[leftmargin=*]
+    \item Refine trajectory
+    \item Begin autonomous sensing
+    \item Switch to relative navigation
+\end{itemize}
+
+\textbf{Phase 3: Proximity Operations (100 m -- 10 km)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Critical phase for your problem!}
+    \item Careful trajectory planning
+    \item Collision avoidance
+    \item Continuous target tracking
+\end{itemize}
+
+\textbf{Phase 4: Close Proximity \& Capture ($<$100 m)}
+\begin{itemize}[leftmargin=*]
+    \item Final approach corridor
+    \item Synchronize rotation rates
+    \item Execute capture
+\end{itemize}
+
+\subsection{Hill-Clohessy-Wiltshire (HCW) Equations}
+
+\textbf{Relative motion in orbit} (linearized):
+
+\begin{align}
+\ddot{x} - 2n\dot{y} - 3n^2x &= \frac{f_x}{m} \\
+\ddot{y} + 2n\dot{x} &= \frac{f_y}{m} \\
+\ddot{z} + n^2z &= \frac{f_z}{m}
+\end{align}
+
+Where:
+\begin{itemize}[leftmargin=*]
+    \item $(x, y, z)$: Local orbital frame (radial, along-track, cross-track)
+    \item $n$: Mean motion (orbital angular velocity) = $\sqrt{\mu/a^3}$
+    \item $\mathbf{f}$: Control forces
+\end{itemize}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=codeborder,title=Key Insight]
+\begin{itemize}[leftmargin=*]
+    \item Radial ($x$) and along-track ($y$) are \textbf{coupled} via Coriolis terms ($2n\dot{y}$, $2n\dot{x}$)
+    \item Cross-track ($z$) is \textbf{decoupled}
+    \item Natural motion creates elliptical relative trajectories
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{V-bar and R-bar Approaches}
+
+\textbf{R-bar (Radial approach):}
+\begin{itemize}[leftmargin=*]
+    \item Approach from above/below
+    \item Naturally stable against along-track drift
+    \item Requires active station-keeping
+\end{itemize}
+
+\textbf{V-bar (Velocity vector approach):}
+\begin{itemize}[leftmargin=*]
+    \item Approach from behind/front
+    \item Passive safety (natural separation if engines fail)
+    \item Preferred for ISS
+\end{itemize}
+
+\section{Capture Mechanisms}
+
+\subsection{Contact-Based Methods}
+
+\subsubsection{1. Robotic Arm}
+\begin{itemize}[leftmargin=*]
+    \item Example: Canadarm2 on ISS, SSRMS
+    \item \textbf{Pros}: Precise, proven technology
+    \item \textbf{Cons}: Requires close proximity, complex dynamics
+    \item \textbf{Control Challenge}: Free-floating base problem!
+\end{itemize}
+
+\begin{tcolorbox}[colback=yellow!10!white,colframe=emphcolor,title=Free-Floating Dynamics]
+When arm moves $\rightarrow$ spacecraft base reacts (Newton's 3rd law)
+
+You need \textbf{Generalized Jacobian} that accounts for base motion:
+\begin{itemize}[leftmargin=*]
+    \item Position of end-effector depends on both joint angles AND base motion
+    \item Captures induce momentum transfer $\rightarrow$ spacecraft tumbles
+\end{itemize}
+\end{tcolorbox}
+
+\subsubsection{2. Harpoon}
+\begin{itemize}[leftmargin=*]
+    \item Fire penetrating spike into target
+    \item Tether connects chaser to target
+    \item \textbf{Pros}: Works for non-cooperative targets
+    \item \textbf{Cons}: Can fragment target, tether dynamics complex
+\end{itemize}
+
+\subsubsection{3. Net}
+\begin{itemize}[leftmargin=*]
+    \item Deploy net to envelop target
+    \item \textbf{Pros}: Gentle, encapsulates fragments
+    \item \textbf{Cons}: Deployment dynamics, tangling risk
+\end{itemize}
+
+\subsubsection{4. Gripper/Grapple}
+\begin{itemize}[leftmargin=*]
+    \item Mechanical jaws grip target
+    \item Requires attachment point (cooperative targets)
+\end{itemize}
+
+\subsection{Contactless Methods}
+
+\subsubsection{1. Electrostatic Tractor}
+\begin{itemize}[leftmargin=*]
+    \item Charge spacecraft oppositely $\rightarrow$ Coulomb attraction
+    \item \textbf{Pros}: No contact, scalable force
+    \item \textbf{Cons}: Requires charge management, works at close range
+\end{itemize}
+
+\subsubsection{2. Laser Ablation}
+\begin{itemize}[leftmargin=*]
+    \item Vaporize surface material $\rightarrow$ creates thrust on target
+    \item \textbf{Pros}: Standoff distance, no rendezvous needed
+    \item \textbf{Cons}: Debris from ablation, power requirements
+\end{itemize}
+
+\subsubsection{3. Ion Beam Shepherd}
+\begin{itemize}[leftmargin=*]
+    \item Plasma thruster creates force on target
+    \item \textbf{Pros}: Gentle, continuous force
+    \item \textbf{Cons}: Very slow, complex plasma dynamics
+\end{itemize}
+
+\subsubsection{4. Magnetic Tractor}
+\begin{itemize}[leftmargin=*]
+    \item Use magnetic fields (for ferromagnetic debris)
+    \item \textbf{Pros}: No contact
+    \item \textbf{Cons}: Only works for magnetic materials
+\end{itemize}
+
+\section{Control Challenges for Non-Cooperative Targets}
+
+\subsection{What Makes a Target ``Non-Cooperative''?}
+
+\begin{enumerate}
+    \item \textbf{Unknown dynamics}: Tumbling rate unknown
+    \item \textbf{No communication}: Can't command it
+    \item \textbf{Unknown mass properties}: Center of mass, inertia tensor unknown
+    \item \textbf{Unknown shape/structure}: Visual only
+    \item \textbf{Unpredictable}: Solar radiation pressure, atmospheric drag variations
+\end{enumerate}
+
+\subsection{State Estimation Problem}
+
+You need to estimate:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Position \& velocity} (6 DOF translation)
+    \item \textbf{Orientation \& angular velocity} (6 DOF rotation)
+    \item \textbf{Total: 12-state estimation problem}
+\end{itemize}
+
+\textbf{Sensors:}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{LIDAR}: Range and range-rate
+    \item \textbf{Cameras}: Visual tracking, structure from motion
+    \item \textbf{Radar}: All-weather tracking
+\end{itemize}
+
+\textbf{Estimation Algorithms:}
+\begin{itemize}[leftmargin=*]
+    \item Extended Kalman Filter (EKF)
+    \item Unscented Kalman Filter (UKF) -- better for nonlinear
+    \item Particle Filters -- for highly nonlinear/multimodal
+\end{itemize}
+
+\subsection{Tumbling Dynamics}
+
+Debris often tumbles due to:
+\begin{itemize}[leftmargin=*]
+    \item Collision-induced rotation
+    \item Gravity gradient torque
+    \item Solar radiation pressure
+    \item Magnetic field interaction
+\end{itemize}
+
+\textbf{Euler's Equation} (torque-free motion):
+
+\begin{align}
+I_1\dot{\omega}_1 &= (I_2 - I_3)\omega_2\omega_3 \\
+I_2\dot{\omega}_2 &= (I_3 - I_1)\omega_3\omega_1 \\
+I_3\dot{\omega}_3 &= (I_1 - I_2)\omega_1\omega_2
+\end{align}
+
+\textbf{Result:} Complex 3D tumbling, periodic for rigid bodies
+
+\subsection{Detumbling Strategies}
+
+\textbf{Option 1: Match Rotation}
+\begin{itemize}[leftmargin=*]
+    \item Estimate target angular velocity
+    \item Synchronize chaser rotation
+    \item Capture in rotating frame
+    \item \textbf{Challenge}: High-rate tumbling $\rightarrow$ high control effort
+\end{itemize}
+
+\textbf{Option 2: Active Detumbling Before Capture}
+\begin{itemize}[leftmargin=*]
+    \item Apply external torque (contactless methods)
+    \item Slow down tumbling gradually
+    \item Then capture
+    \item \textbf{Challenge}: Takes time, requires precise torque control
+\end{itemize}
+
+\textbf{Option 3: Capture While Tumbling}
+\begin{itemize}[leftmargin=*]
+    \item Fast capture mechanism
+    \item Accept the momentum transfer
+    \item Detumble combined system afterward
+    \item \textbf{Challenge}: Huge impact forces, risk of damage
+\end{itemize}
+
+\section{Deorbiting Techniques}
+
+\subsection{Natural Decay}
+
+\begin{itemize}[leftmargin=*]
+    \item Atmospheric drag gradually lowers orbit
+    \item Decay time = $f$(altitude, area-to-mass ratio, solar activity)
+    \item \textbf{Problem:} Can take decades above 600 km
+\end{itemize}
+
+\subsection{Active Deorbiting}
+
+\subsubsection{1. Direct Re-entry}
+\begin{itemize}[leftmargin=*]
+    \item Use propulsion to lower periapsis below $\sim$80 km
+    \item Atmospheric drag increases exponentially
+    \item Object burns up
+    \item \textbf{$\Delta v$ required:} $\sim$100--200 m/s from LEO
+\end{itemize}
+
+\subsubsection{2. Drag Augmentation}
+
+\textbf{a) Drag Sail}
+\begin{itemize}[leftmargin=*]
+    \item Deploy large surface area (sail)
+    \item Increases drag force: $F_{\text{drag}} = 0.5 \rho v^2 C_D A$
+    \item Accelerates natural decay
+    \item \textbf{Pros:} Passive, no propellant
+    \item \textbf{Cons:} Attitude stabilization needed
+\end{itemize}
+
+\textbf{b) Inflatable Structures}
+\begin{itemize}[leftmargin=*]
+    \item Similar to drag sail but lighter
+    \item Can increase area by 10--100$\times$
+\end{itemize}
+
+\textbf{c) Electrodynamic Tether}
+\begin{itemize}[leftmargin=*]
+    \item Long conducting wire in Earth's magnetic field
+    \item Generates current $\rightarrow$ Lorentz force $\rightarrow$ drag
+    \item \textbf{Pros:} No propellant, can generate power
+    \item \textbf{Cons:} Complex deployment, tether dynamics
+\end{itemize}
+
+\subsubsection{3. Graveyard Orbit}
+\begin{itemize}[leftmargin=*]
+    \item Boost to higher orbit ($>$2000 km)
+    \item Out of useful LEO region
+    \item \textbf{Problem:} Doesn't solve long-term issue
+\end{itemize}
+
+\subsection{Controlled Re-entry}
+
+For large objects ($>$1 ton):
+\begin{itemize}[leftmargin=*]
+    \item Target specific ocean areas (South Pacific)
+    \item Prevent casualty on ground
+    \item Requires precise trajectory control
+\end{itemize}
+
+\section{Key Differences from Terrestrial Robotics}
+
+\begin{enumerate}
+    \item \textbf{No Fixed Base}
+    \begin{itemize}
+        \item Manipulator motion $\rightarrow$ base reaction
+        \item Need \textbf{Generalized Jacobian} and \textbf{Dynamic Singularities}
+        \item Momentum conservation critical
+    \end{itemize}
+
+    \item \textbf{No Gravity (Microgravity)}
+    \begin{itemize}
+        \item Objects don't ``fall''
+        \item Small forces persist
+        \item Contact forces dominate
+    \end{itemize}
+
+    \item \textbf{Orbital Dynamics}
+    \begin{itemize}
+        \item Reference frame accelerates (centripetal)
+        \item Coriolis effects in relative motion
+        \item Tidal forces (gravity gradient)
+    \end{itemize}
+
+    \item \textbf{Propellant Constraints}
+    \begin{itemize}
+        \item Every maneuver costs fuel
+        \item Fuel mass = mission lifetime
+        \item Optimization critical
+    \end{itemize}
+
+    \item \textbf{Extreme Environment}
+    \begin{itemize}
+        \item Temperature extremes: $-150^\circ$C to $+150^\circ$C
+        \item Radiation damages electronics
+        \item Vacuum $\rightarrow$ no convective cooling
+        \item Atomic oxygen erodes materials
+    \end{itemize}
+
+    \item \textbf{Communication Delays}
+    \begin{itemize}
+        \item Ground stations: $\sim$1 sec delay
+        \item Requires autonomy
+        \item Can't teleoperate fast maneuvers
+    \end{itemize}
+
+    \item \textbf{Sensing Challenges}
+    \begin{itemize}
+        \item GPS limited to LEO
+        \item Visual tracking affected by lighting (sun/eclipse)
+        \item No tactile feedback before contact
+    \end{itemize}
+\end{enumerate}
+
+\section{Control Architecture for ADR Mission}
+
+\subsection{Typical System Layers}
+
+\begin{center}
+\begin{minipage}{0.8\textwidth}
+\begin{tcolorbox}[colback=blue!5!white,colframe=codeborder]
+\centering
+\textbf{Mission Planning (Ground/Onboard)} \\
+Target selection, Trajectory optimization
+
+\vspace{0.3cm}
+$\downarrow$
+
+\vspace{0.3cm}
+\textbf{Guidance (Path Planning)} \\
+Collision avoidance, Approach corridors, Fuel optimization
+
+\vspace{0.3cm}
+$\downarrow$
+
+\vspace{0.3cm}
+\textbf{Navigation (State Estimation)} \\
+Sensor fusion (LIDAR, camera), Target pose estimation, \\
+Relative state (position, velocity)
+
+\vspace{0.3cm}
+$\downarrow$
+
+\vspace{0.3cm}
+\textbf{Control (Low-Level)} \\
+Attitude control (PD, MPC), Thruster firing logic, \\
+Manipulator control
+\end{tcolorbox}
+\end{minipage}
+\end{center}
+
+\subsection{Control Algorithms Relevant for This Problem}
+
+\textbf{1. PID Control}
+\begin{itemize}[leftmargin=*]
+    \item Simple, robust
+    \item Works for attitude stabilization
+    \item May struggle with coupled dynamics
+\end{itemize}
+
+\textbf{2. Model Predictive Control (MPC)}
+\begin{itemize}[leftmargin=*]
+    \item Optimal for constrained systems
+    \item Handles thruster saturation
+    \item Fuel optimization
+    \item Collision avoidance constraints
+    \item \textbf{Highly recommended for proximity ops!}
+\end{itemize}
+
+\textbf{3. Sliding Mode Control}
+\begin{itemize}[leftmargin=*]
+    \item Robust to uncertainties
+    \item Good for non-cooperative targets
+    \item Chattering can waste fuel
+\end{itemize}
+
+\textbf{4. Adaptive Control}
+\begin{itemize}[leftmargin=*]
+    \item Estimate unknown target parameters online
+    \item Adjust control gains
+    \item Useful for tumbling targets
+\end{itemize}
+
+\textbf{5. Optimal Control (LQR/LQG)}
+\begin{itemize}[leftmargin=*]
+    \item Minimize fuel + time
+    \item Well-suited for rendezvous
+\end{itemize}
+
+\section{Recommended Focus Areas for Your Solution}
+
+\subsection{As a Robotics/Controls Engineer, You Can Contribute:}
+
+\begin{enumerate}
+    \item \textbf{Robust State Estimation}
+    \begin{itemize}
+        \item Develop filters for tumbling target tracking
+        \item Sensor fusion (vision + LIDAR)
+        \item Handle occlusions, lighting changes
+    \end{itemize}
+
+    \item \textbf{Trajectory Planning}
+    \begin{itemize}
+        \item Fuel-optimal approach trajectories
+        \item Collision avoidance
+        \item Reachability analysis
+    \end{itemize}
+
+    \item \textbf{Capture Control}
+    \begin{itemize}
+        \item Free-floating base control
+        \item Impact minimization
+        \item Post-capture stabilization
+    \end{itemize}
+
+    \item \textbf{Detumbling Strategies}
+    \begin{itemize}
+        \item Contactless detumbling (if using ion beam, etc.)
+        \item Momentum management
+        \item Combined system control after capture
+    \end{itemize}
+
+    \item \textbf{Fault Tolerance}
+    \begin{itemize}
+        \item Thruster failures
+        \item Sensor degradation
+        \item Safe-mode behaviors
+    \end{itemize}
+\end{enumerate}
+
+\section{Key Equations Cheat Sheet}
+
+\subsection{Orbital Mechanics}
+
+\begin{align}
+\text{Orbital velocity:} \quad v &= \sqrt{\frac{\mu}{r}} \\
+\text{Orbital period:} \quad T &= 2\pi\sqrt{\frac{a^3}{\mu}} \\
+\text{Vis-viva equation:} \quad v^2 &= \mu\left(\frac{2}{r} - \frac{1}{a}\right) \\
+\text{Hohmann } \Delta v: \quad \Delta v_1 &= \sqrt{\frac{\mu}{r_1}}\left(\sqrt{\frac{2r_2}{r_1+r_2}} - 1\right)
+\end{align}
+
+\subsection{Relative Motion (HCW)}
+
+\begin{align}
+\ddot{x} - 2n\dot{y} - 3n^2x &= \frac{f_x}{m} \\
+\ddot{y} + 2n\dot{x} &= \frac{f_y}{m} \\
+\ddot{z} + n^2z &= \frac{f_z}{m}
+\end{align}
+
+where $n = \sqrt{\mu/a^3}$
+
+\subsection{Attitude Dynamics}
+
+\begin{align}
+\mathbf{I} \cdot \dot{\boldsymbol{\omega}} + \boldsymbol{\omega} \times (\mathbf{I} \cdot \boldsymbol{\omega}) &= \boldsymbol{\tau} \\
+\text{Quaternion kinematics:} \quad \dot{\mathbf{q}} &= 0.5 \, \Omega(\boldsymbol{\omega})\mathbf{q}
+\end{align}
+
+\subsection{Drag Force}
+
+\begin{equation}
+F_{\text{drag}} = 0.5 \rho v^2 C_D A
+\end{equation}
+
+where $\rho$ = atmospheric density
+
+\subsection{Tsiolkovsky Rocket Equation}
+
+\begin{equation}
+\Delta v = v_e \ln\left(\frac{m_0}{m_f}\right)
+\end{equation}
+
+where $v_e$ = exhaust velocity
+
+\section{Resources for Further Learning}
+
+\subsection{Papers (from problem statement)}
+
+\begin{enumerate}
+    \item A. Ledkov, V. Aslanov, ``Review of contact and contactless active space debris removal approaches'', \textit{Prog. Aerosp. Sci.} 134 (2022) 100858
+    \item M. Shan, J. Guo, E. Gill, ``Review and comparison of active space debris capture and removal methods'', \textit{Prog. Aero. Sci.} 80 (2016) 18-32
+\end{enumerate}
+
+\subsection{Recommended Textbooks}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Orbital Mechanics}: ``Orbital Mechanics for Engineering Students'' by Howard Curtis
+    \item \textbf{Spacecraft Dynamics}: ``Spacecraft Dynamics and Control'' by Marcel Sidi
+    \item \textbf{Space Robotics}: ``Robotics and Automation in Space'' -- Yoshida/Umetani
+\end{itemize}
+
+\subsection{Online Resources}
+
+\begin{itemize}[leftmargin=*]
+    \item ESA Space Debris Office: \url{https://www.esa.int/Space_Safety/Space_Debris}
+    \item NASA Orbital Debris Program: \url{https://orbitaldebris.jsc.nasa.gov/}
+\end{itemize}
+
+\subsection{Software Tools}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{GMAT} (General Mission Analysis Tool): Free trajectory design
+    \item \textbf{STK} (Systems Tool Kit): Commercial, orbit visualization
+    \item \textbf{Orekit}: Open-source orbital mechanics library (Python/Java)
+\end{itemize}
+
+\section{Summary: Your Robotics Skills Applied to Space}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|p{6cm}|p{6cm}|}
+\hline
+\textbf{Terrestrial Robotics} & \textbf{Space Robotics (ADR)} \\
+\hline
+Fixed base manipulator & Free-floating base \\
+\hline
+Cooperative targets & Non-cooperative, tumbling \\
+\hline
+Gravity assists & Orbital dynamics dominate \\
+\hline
+Unlimited power & Solar/battery constrained \\
+\hline
+Rich sensing & Limited, delayed sensing \\
+\hline
+Ground-based testing & Simulation + limited space testing \\
+\hline
+Reaction forces to ground & Momentum conservation \\
+\hline
+\end{tabular}
+\end{table}
+
+\vspace{1cm}
+
+\begin{tcolorbox}[colback=green!5!white,colframe=green!50!black,title=Your Advantage]
+\textbf{Control theory, state estimation, path planning, and optimization translate directly!} The physics is different but the mathematical frameworks are similar.
+\end{tcolorbox}
+
+\vspace{1cm}
+
+\begin{center}
+{\Large \textbf{Good luck with your hackathon!}}
+\end{center}
+
+\end{document}
