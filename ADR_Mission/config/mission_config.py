@@ -12,15 +12,31 @@ MU_EARTH = 398600.0  # km^3/s^2
 R_EARTH = 6371.0  # km
 G_ACCEL = 9.81e-3  # km/s^2
 
+# Coulomb force constants
+COULOMB_K = 8.987551e9  # N·m²/C² (Coulomb's constant)
+EPSILON_0 = 8.854187e-12  # F/m (vacuum permittivity)
+ELECTRON_CHARGE = 1.602e-19  # C (elementary charge)
+
 # ====================
 # CHASER SPACECRAFT
 # ====================
 CHASER = {
     'mass': 1270.0,  # kg
-    'fuel_mass': 870.0,  # kg (optimized for complete mission success)
-    'dry_mass': 400.0,  # kg
-    'isp': 300.0,  # seconds
-    've': 300.0 * 9.81e-3,  # km/s (exhaust velocity)
+    'dry_mass': 1270.0,  # kg (no fuel needed!)
+
+    # COULOMB FORCE ACTUATOR SYSTEM
+    # Instead of chemical fuel, we use charged Coulomb shells
+    'charge_capacity': 1.0,  # Coulombs (maximum charge)
+    'current_charge': 0.5,  # Coulombs (initial charge state)
+    'capacitor_energy': 1e9,  # Joules (1 GJ energy storage capacity - large battery!)
+    'current_energy': 5e8,  # Joules (500 MJ initial energy - plenty for mission!)
+    'charging_efficiency': 0.95,  # efficiency of charge transfer
+
+    # Coulomb shell parameters
+    'shell_radius': 0.5,  # meters (effective radius of charged shell)
+    'max_voltage': 100000.0,  # Volts (100 kV for strong forces)
+    'min_charge': -1.0,  # Coulombs (can be negative for repulsion)
+    'max_charge': 1.0,   # Coulombs (positive for attraction)
 
     # Dimensions (assume 1m cube)
     'dimensions': np.array([1.0, 1.0, 1.0]),  # meters
@@ -30,10 +46,10 @@ CHASER = {
                        800.0 * (1.0**2 + 1.0**2) / 12.0,
                        800.0 * (1.0**2 + 1.0**2) / 12.0]),
 
-    # Thruster capabilities
-    'max_thrust': 20.0,  # N
-    'min_thrust': 0.1,  # N
-    'max_torque': 0.5,  # N·m
+    # Electrostatic force capabilities (replaces thrusters)
+    'max_force': 20.0,  # N (maximum Coulomb force)
+    'min_force': 0.01,  # N (minimum controllable force)
+    'max_torque': 0.5,  # N·m (using distributed charge elements)
 
     # Initial orbit (400 km altitude, circular)
     'altitude_init': 400.0,  # km
@@ -55,6 +71,13 @@ TARGET = {
 
     # Initial tumbling (rad/s)
     'omega_init': np.array([0.1, 0.05, 0.15]),
+
+    # ELECTROSTATIC PROPERTIES
+    # Debris can be naturally charged by space plasma or we can induce charge
+    'charge': -0.001,  # Coulombs (naturally charged by space environment)
+    'conductivity': 1e6,  # S/m (conducting material - aluminum)
+    'can_induce_charge': True,  # We can use electron beam to charge it
+    'induced_charge': 0.0,  # Coulombs (charge we induce on it)
 
     # Target orbit (600 km altitude, circular)
     'altitude_init': 600.0,  # km

@@ -47,41 +47,41 @@ def save_mission_report(mission_data, output_file):
     # Phase 1
     if 'phase_1' in mission_data and mission_data['phase_1'] is not None:
         report.append("-" * 80)
-        report.append("PHASE 1: HOHMANN TRANSFER")
+        report.append("PHASE 1: HOHMANN TRANSFER (COULOMB FORCES)")
         report.append("-" * 80)
         data = mission_data['phase_1']
         report.append(f"  First burn (Δv₁):      {data['dv1']*1000:8.2f} m/s")
         report.append(f"  Second burn (Δv₂):     {data['dv2']*1000:8.2f} m/s")
         report.append(f"  Total Δv:              {data['total_dv']*1000:8.2f} m/s")
         report.append(f"  Transfer time:         {data['transfer_time']/60:8.1f} minutes")
-        report.append(f"  Fuel used:             {data['fuel_used']:8.2f} kg")
-        report.append(f"  Fuel remaining:        {data['fuel_remaining']:8.2f} kg")
+        report.append(f"  Energy used:           {data.get('energy_used', 0)/1e6:8.2f} MJ")
+        report.append(f"  Energy remaining:      {data.get('energy_remaining', 0)/1e6:8.2f} MJ")
         report.append("")
 
     # Phase 2
     if 'phase_2' in mission_data and mission_data['phase_2'] is not None:
         report.append("-" * 80)
-        report.append("PHASE 2: FAR-RANGE APPROACH")
+        report.append("PHASE 2: FAR-RANGE APPROACH (COULOMB TRACTOR)")
         report.append("-" * 80)
         data = mission_data['phase_2']
         report.append(f"  Final position error:  {data['final_error_pos']*1000:8.2f} m")
         report.append(f"  Final velocity error:  {data['final_error_vel']*1e6:8.2f} mm/s")
         report.append(f"  Total Δv:              {data['total_dv']*1000:8.2f} m/s")
-        report.append(f"  Fuel used:             {data['fuel_used']:8.2f} kg")
-        report.append(f"  Fuel remaining:        {data['fuel_remaining']:8.2f} kg")
+        report.append(f"  Energy used:           {data.get('energy_used', 0)/1e6:8.2f} MJ")
+        report.append(f"  Energy remaining:      {data.get('energy_remaining', 0)/1e6:8.2f} MJ")
         report.append("")
 
     # Phase 3
     if 'phase_3' in mission_data and mission_data['phase_3'] is not None:
         report.append("-" * 80)
-        report.append("PHASE 3: PROXIMITY OPERATIONS")
+        report.append("PHASE 3: PROXIMITY OPERATIONS (COULOMB FORCES)")
         report.append("-" * 80)
         data = mission_data['phase_3']
         report.append(f"  Final position error:  {data['final_error_pos']*1000:8.2f} m")
         report.append(f"  Final velocity error:  {data['final_error_vel']*1e6:8.2f} mm/s")
         report.append(f"  Total Δv:              {data['total_dv']*1000:8.2f} m/s")
-        report.append(f"  Fuel used:             {data['fuel_used']:8.2f} kg")
-        report.append(f"  Fuel remaining:        {data['fuel_remaining']:8.2f} kg")
+        report.append(f"  Energy used:           {data.get('energy_used', 0)/1e6:8.2f} MJ")
+        report.append(f"  Energy remaining:      {data.get('energy_remaining', 0)/1e6:8.2f} MJ")
         report.append("")
 
     # Phase 4
@@ -98,24 +98,24 @@ def save_mission_report(mission_data, output_file):
     # Phase 5
     if 'phase_5' in mission_data and mission_data['phase_5'] is not None:
         report.append("-" * 80)
-        report.append("PHASE 5: CAPTURE")
+        report.append("PHASE 5: CAPTURE (COULOMB TRACTOR)")
         report.append("-" * 80)
         data = mission_data['phase_5']
         report.append(f"  Final separation:      {data['final_separation']*1000:8.2f} m")
         report.append(f"  Final velocity:        {data['final_velocity']*1000:8.2f} m/s")
-        report.append(f"  Fuel used:             {data['fuel_used']:8.2f} kg")
-        report.append(f"  Fuel remaining:        {data['fuel_remaining']:8.2f} kg")
+        report.append(f"  Energy used:           {data.get('energy_used', 0)/1e6:8.2f} MJ")
+        report.append(f"  Energy remaining:      {data.get('energy_remaining', 0)/1e6:8.2f} MJ")
         report.append("")
 
     # Phase 6
     if 'phase_6' in mission_data and mission_data['phase_6'] is not None:
         report.append("-" * 80)
-        report.append("PHASE 6: DEORBIT")
+        report.append("PHASE 6: DEORBIT (COULOMB TRACTOR)")
         report.append("-" * 80)
         data = mission_data['phase_6']
         report.append(f"  Deorbit Δv:            {abs(data['dv'])*1000:8.2f} m/s")
-        report.append(f"  Fuel required:         {data['fuel_required']:8.2f} kg")
-        report.append(f"  Final fuel:            {data['fuel_remaining']:8.2f} kg")
+        report.append(f"  Energy required:       {data.get('energy_required', 0)/1e6:8.2f} MJ")
+        report.append(f"  Energy remaining:      {data.get('energy_remaining', 0)/1e6:8.2f} MJ")
         report.append("")
 
     # Summary
@@ -133,15 +133,17 @@ def save_mission_report(mission_data, output_file):
                 total_dv += data['total_dv']
             if 'dv' in data:
                 total_dv += abs(data['dv'])
-            if 'fuel_used' in data:
-                total_fuel += data['fuel_used']
-            if 'fuel_required' in data:
-                total_fuel += data['fuel_required']
+            if 'energy_used' in data:
+                total_fuel += data['energy_used']
+            if 'energy_required' in data:
+                total_fuel += data['energy_required']
 
     report.append(f"  Total Δv:              {total_dv*1000:8.2f} m/s")
-    report.append(f"  Total fuel consumed:   {total_fuel:8.2f} kg")
-    report.append(f"  Initial fuel:          {CHASER['fuel_mass']:8.2f} kg")
-    report.append(f"  Fuel margin:           {(CHASER['fuel_mass']-total_fuel)/CHASER['fuel_mass']*100:8.1f}%")
+    report.append(f"  Total energy consumed: {total_fuel/1e6:8.2f} MJ")
+    report.append(f"  Initial energy:        {CHASER['current_energy']/1e6:8.2f} MJ")
+    report.append(f"  Energy margin:         {(CHASER['current_energy']-total_fuel)/CHASER['current_energy']*100:8.1f}%")
+    report.append("")
+    report.append("  🚀 COULOMB FORCE PROPULSION - ZERO CHEMICAL FUEL USED!")
     report.append("")
     report.append("="*80)
 

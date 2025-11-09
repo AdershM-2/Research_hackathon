@@ -4,8 +4,10 @@
     "dv2": 0.05522809054387601,
     "total_dv": 0.11085957889589437,
     "transfer_time": 2834.0737551436587,
-    "fuel_used": 46.94968271455601,
-    "fuel_remaining": 823.050317285444
+    "energy_used": 7804052.357939144,
+    "energy_remaining": 492195947.6420609,
+    "fuel_used": 0.0,
+    "fuel_remaining": 0.0
   },
   "phase_2": {
     "time": [
@@ -20177,8 +20179,10 @@
     "final_error_pos": 0.03417397976827804,
     "final_error_vel": 0.0009871063712454907,
     "total_dv": 2.7479600634933865,
-    "fuel_used": 770.7811039907721,
-    "fuel_remaining": 52.269213294671886
+    "energy_used": 84.42000543495412,
+    "energy_remaining": 492195863.22205544,
+    "fuel_used": 0.0,
+    "fuel_remaining": 0.0
   },
   "phase_3": {
     "time": [
@@ -120990,8 +120994,10 @@
     "final_error_pos": 0.0012033511878937891,
     "final_error_vel": 3.8228954653657775e-05,
     "total_dv": 0.019733920913322912,
-    "fuel_used": 8.487340034673235,
-    "fuel_remaining": 43.78187325999865
+    "energy_used": 24728.654797943498,
+    "energy_remaining": 492171134.56725746,
+    "fuel_used": 0.0,
+    "fuel_remaining": 0.0
   },
   "phase_4": {
     "time": [
@@ -244611,12 +244617,16 @@
     ],
     "final_separation": 0.00026481770688703386,
     "final_velocity": 4.308133900368441e-06,
-    "fuel_used": 0.27812780073601884,
-    "fuel_remaining": 43.50374545926263
+    "energy_used": 26.383398024167704,
+    "energy_remaining": 492171108.18385947,
+    "fuel_used": 0.0,
+    "fuel_remaining": 0.0
   },
   "phase_6": {
     "dv": -0.09799388996318825,
-    "fuel_required": 43.228714130373035,
-    "fuel_remaining": 0.2750313288895967
+    "energy_required": 6337849.630277515,
+    "energy_remaining": 485833258.55358195,
+    "fuel_required": 0.0,
+    "fuel_remaining": 0.0
   }
 }
