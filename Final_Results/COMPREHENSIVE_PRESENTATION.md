@@ -11,8 +11,22 @@
 
 This presentation demonstrates a **breakthrough propulsion technology** using Magneto-Coulombic forces (Lorentz force) for spacecraft control and debris removal.
 
-### Key Innovation
-- **Propellant-free** propulsion using charged shells interacting with Earth's magnetic field
+### Key Innovations
+
+#### **No Moving Parts**
+- Entirely electrostatic system - no mechanical actuators
+- No deployable mechanisms required for propulsion
+- Solid-state charge management
+- Ultra-reliable, no mechanical wear
+
+#### **No Active Propulsion**
+- Passive interaction with Earth's magnetic field
+- No propellant expulsion or combustion
+- No mass ejection required
+- Infinite theoretical specific impulse (Isp = ∞)
+
+#### **Revolutionary Capabilities**
+- **Propellant-free**: Zero consumables for thrust generation
 - **High-charge system**: 1-5 Coulombs per shell (not microcoulombs)
 - **Lightweight chasers**: 10-25 kg spacecraft
 - **Unprecedented performance**: Mission completion in ~2 days vs weeks for traditional systems
