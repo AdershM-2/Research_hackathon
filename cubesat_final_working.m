@@ -454,8 +454,18 @@ ylabel('Altitude (km)', 'FontWeight', 'bold')
 title('Orbital Decay', 'FontWeight', 'bold')
 ylim([0 max(alt)*1.1])
 
-saveas(gcf, 'FINAL_RESULTS.png');
-fprintf('Saved: FINAL_RESULTS.png\n\n');
+% Create results folder if it doesn't exist
+results_folder = 'mission_results';
+if ~exist(results_folder, 'dir')
+    mkdir(results_folder);
+    fprintf('Created results folder: %s/\n', results_folder);
+end
+
+% Save in multiple formats for presentation use
+saveas(gcf, fullfile(results_folder, 'FINAL_RESULTS.png'));
+saveas(gcf, fullfile(results_folder, 'FINAL_RESULTS.fig'));
+print(gcf, fullfile(results_folder, 'FINAL_RESULTS_highres.png'), '-dpng', '-r300');
+fprintf('Saved: %s/FINAL_RESULTS.png (and .fig, high-res)\n\n', results_folder);
 
 fprintf('========================================\n');
 fprintf('SIMULATION COMPLETE - ALL CONVERGED!\n');

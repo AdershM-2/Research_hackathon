@@ -263,6 +263,13 @@ fprintf('Success rate: %d/%d (%.1f%%)\n\n', success_count, n_cases, ...
 
 fprintf('Generating comparison plots...\n');
 
+% Create test results folder
+test_results_folder = 'test_results';
+if ~exist(test_results_folder, 'dir')
+    mkdir(test_results_folder);
+    fprintf('Created test results folder: %s/\n', test_results_folder);
+end
+
 % Figure 1: Convergence comparison (all cases)
 figure('Position', [50 50 1600 1000], 'Color', 'w');
 
@@ -322,8 +329,11 @@ title('Time to Convergence', 'FontWeight', 'bold', 'FontSize', 12)
 set(gca, 'XTick', 1:n_cases, 'XTickLabel', 1:n_cases)
 xlim([0, n_cases+1])
 
-saveas(gcf, 'test_suite_results.png');
-fprintf('Saved: test_suite_results.png\n');
+% Save test suite results
+saveas(gcf, fullfile(test_results_folder, 'test_suite_results.png'));
+saveas(gcf, fullfile(test_results_folder, 'test_suite_results.fig'));
+print(gcf, fullfile(test_results_folder, 'test_suite_results_highres.png'), '-dpng', '-r300');
+fprintf('Saved: %s/test_suite_results.png (and .fig, high-res)\n', test_results_folder);
 
 % Figure 2: Statistical summary
 figure('Position', [100 100 1400 800], 'Color', 'w');
@@ -336,7 +346,9 @@ colormap([0.2 0.8 0.3; 0.8 0.2 0.2])
 
 % Distance accuracy histogram
 subplot(2,3,2)
-histogram(final_dists, 20, 'FaceColor', [0.3 0.6 0.9])
+hist(final_dists, 20)
+h = findobj(gca, 'Type', 'patch');
+set(h, 'FaceColor', [0.3 0.6 0.9])
 xlabel('Final Distance (m)', 'FontWeight', 'bold')
 ylabel('Frequency', 'FontWeight', 'bold')
 title('Distance Accuracy Distribution', 'FontWeight', 'bold', 'FontSize', 12)
@@ -345,7 +357,9 @@ grid on
 % Velocity accuracy histogram
 subplot(2,3,3)
 final_vels = [results.final_vel];
-histogram(final_vels, 20, 'FaceColor', [0.9 0.5 0.2])
+hist(final_vels, 20)
+h = findobj(gca, 'Type', 'patch');
+set(h, 'FaceColor', [0.9 0.5 0.2])
 xlabel('Final Velocity (m/s)', 'FontWeight', 'bold')
 ylabel('Frequency', 'FontWeight', 'bold')
 title('Velocity Accuracy Distribution', 'FontWeight', 'bold', 'FontSize', 12)
@@ -378,8 +392,11 @@ ylabel('Final Distance (m)', 'FontWeight', 'bold')
 title('Mass Effect', 'FontWeight', 'bold', 'FontSize', 12)
 grid on
 
-saveas(gcf, 'test_suite_statistics.png');
-fprintf('Saved: test_suite_statistics.png\n');
+% Save statistics figure
+saveas(gcf, fullfile(test_results_folder, 'test_suite_statistics.png'));
+saveas(gcf, fullfile(test_results_folder, 'test_suite_statistics.fig'));
+print(gcf, fullfile(test_results_folder, 'test_suite_statistics_highres.png'), '-dpng', '-r300');
+fprintf('Saved: %s/test_suite_statistics.png (and .fig, high-res)\n', test_results_folder);
 
 %% Monte Carlo Robustness Test
 
@@ -509,6 +526,22 @@ fprintf('  - Debris mass variations (5-20 kg)\n');
 fprintf('  - Control gain variations\n');
 fprintf('  - Random perturbations\n\n');
 
-fprintf('Figures saved:\n');
-fprintf('  - test_suite_results.png\n');
-fprintf('  - test_suite_statistics.png\n\n');
+% Save summary CSV file for easy import to PowerPoint/Excel
+summary_csv = fullfile(test_results_folder, 'test_results_summary.csv');
+fid = fopen(summary_csv, 'w');
+fprintf(fid, 'Test Case,Final Distance (m),Final Velocity (m/s),Convergence Time (min),Status\n');
+for idx = 1:n_cases
+    fprintf(fid, '%s,%.3f,%.4f,%.1f,%s\n', ...
+            results(idx).name, results(idx).final_dist, results(idx).final_vel, ...
+            results(idx).time_to_conv, results(idx).converged);
+end
+fclose(fid);
+fprintf('Saved: %s/test_results_summary.csv\n', test_results_folder);
+
+fprintf('\nAll test results saved to: %s/\n', test_results_folder);
+fprintf('Files available for PowerPoint:\n');
+fprintf('  - test_suite_results.png (comparison plots)\n');
+fprintf('  - test_suite_results_highres.png (300 DPI)\n');
+fprintf('  - test_suite_statistics.png (statistical analysis)\n');
+fprintf('  - test_suite_statistics_highres.png (300 DPI)\n');
+fprintf('  - test_results_summary.csv (data table)\n\n');
