@@ -48,7 +48,8 @@ Instead of consuming chemical fuel, the spacecraft uses **6 charged Coulomb shel
 Research_hackathon/
 ├── README.md                           # This file
 ├── Problem_statement/
-│   └── PROBLEM_STATEMENT.md            # Original hackathon problem
+│   ├── PROBLEM_STATEMENT.md            # Original hackathon problem
+│   └── BACKGROUND_TUTORIAL.md          # Educational background for robotics engineers
 ├── ADR_Mission/
 │   ├── README.md                       # Mission simulation overview
 │   ├── MAGNETO_COULOMBIC_SUMMARY.md    # Approach summary
