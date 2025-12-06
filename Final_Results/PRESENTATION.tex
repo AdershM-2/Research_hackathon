@@ -1,0 +1,735 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usecolortheme{default}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{xcolor}
+
+% Custom colors
+\definecolor{iitblue}{RGB}{0,47,108}
+\definecolor{datagreen}{RGB}{34,139,34}
+
+\setbeamercolor{structure}{fg=iitblue}
+\setbeamercolor{title}{fg=white,bg=iitblue}
+\setbeamercolor{frametitle}{fg=white,bg=iitblue}
+
+\title{Magneto-Coulombic Active Debris Removal System}
+\subtitle{Performance Analysis and Mission Design}
+\author{IIT Kanpur Research Hackathon 2025}
+\date{November 9, 2025}
+\institute{Indian Institute of Technology Kanpur}
+
+\begin{document}
+
+%================================================================================
+% TITLE SLIDE
+%================================================================================
+\begin{frame}
+\titlepage
+\end{frame}
+
+%================================================================================
+% OVERVIEW
+%================================================================================
+\begin{frame}{Executive Summary}
+\begin{block}{Mission Performance}
+\centering
+\Large
+Mission Time: 2.07 days\\
+Rendezvous: 1.37 hours\\
+Energy margin: 99.985\%
+\end{block}
+
+\vspace{0.5cm}
+
+\begin{columns}[t]
+\column{0.5\textwidth}
+\textbf{Results:}
+\begin{itemize}
+    \item Rendezvous: 1.37-1.57 hours
+    \item Total mission: 2.07-2.14 days
+    \item Energy use: <0.015\% per mission
+    \item Reusability: 100+ missions/chaser
+\end{itemize}
+
+\column{0.5\textwidth}
+\textbf{Configurations Tested:}
+\begin{itemize}
+    \item 10 kg \& 25 kg chasers
+    \item 1-5 Coulombs/shell
+    \item 6 Coulomb shells
+    \item Altitudes: 400, 600, 800 km
+\end{itemize}
+\end{columns}
+\end{frame}
+
+%================================================================================
+% KEY FEATURES
+%================================================================================
+\begin{frame}{System Characteristics}
+\begin{columns}[t]
+\column{0.5\textwidth}
+\begin{block}{No Moving Parts}
+\begin{itemize}
+    \item Entirely electrostatic system
+    \item No mechanical actuators
+    \item No deployable mechanisms for propulsion
+    \item Solid-state charge management
+\end{itemize}
+\end{block}
+
+\begin{block}{No Active Propulsion}
+\begin{itemize}
+    \item Passive interaction with Earth's magnetic field
+    \item No propellant expulsion
+    \item No mass ejection
+    \item Infinite specific impulse ($I_{sp} = \infty$)
+\end{itemize}
+\end{block}
+
+\column{0.5\textwidth}
+\begin{block}{System Capabilities}
+\begin{itemize}
+    \item Propellant-free operation
+    \item High-charge system: 1-5 Coulombs/shell
+    \item Lightweight: 10-25 kg spacecraft
+    \item Reusable platform
+    \item Continuous thrust available
+\end{itemize}
+\end{block}
+
+\begin{block}{Mission Scope}
+\begin{itemize}
+    \item Orbital transfer: 400-800 km
+    \item Debris capture: 50 kg target
+    \item Deorbit: 250 km perigee
+    \item Duration: ~2 days
+\end{itemize}
+\end{block}
+\end{columns}
+\end{frame}
+
+%================================================================================
+% PHYSICS PRINCIPLE
+%================================================================================
+\begin{frame}{System Architecture: Lorentz Force}
+\begin{columns}[t]
+\column{0.5\textwidth}
+\begin{block}{Physics Principle}
+\Large
+$$\vec{F} = q(\vec{v} \times \vec{B})$$
+\end{block}
+
+\normalsize
+\textbf{Parameters:}
+\begin{itemize}
+    \item $q$ = Charge (1-5 Coulombs)
+    \item $v$ = Orbital velocity ($\sim$7.5 km/s)
+    \item $B$ = Earth's magnetic field ($\sim$30-50 $\mu$T)
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Force Output:}
+\begin{itemize}
+    \item Range: 1-5 N
+    \item Propellant mass: 0 kg
+    \item Thrust duration: Unlimited
+\end{itemize}
+
+\column{0.5\textwidth}
+\begin{block}{Configuration}
+\textbf{6 Coulomb Shells:}
+\begin{itemize}
+    \item $\pm x$ direction (2 shells)
+    \item $\pm y$ direction (2 shells)
+    \item $\pm z$ direction (2 shells)
+\end{itemize}
+\end{block}
+
+\textbf{Shell Separation:} 0.5-5 m tested
+\begin{itemize}
+    \item Larger separation: higher torque
+    \item Smaller separation: compact design
+\end{itemize}
+
+\textbf{Charge Levels:}
+\begin{itemize}
+    \item 1 C/shell
+    \item 3 C/shell
+    \item 5 C/shell
+\end{itemize}
+\end{columns}
+\end{frame}
+
+%================================================================================
+% PERFORMANCE RESULTS
+%================================================================================
+\begin{frame}{Performance Results}
+\begin{table}
+\centering
+\caption{Configuration Performance @ 600 km Altitude}
+\small
+\begin{tabular}{ccccr}
+\toprule
+\textbf{Chaser} & \textbf{Charge/} & \textbf{Force} & \textbf{Accel} & \textbf{$\Delta v$/Week} \\
+\textbf{Mass} & \textbf{Shell} & \textbf{(N)} & \textbf{(m/s$^2$)} & \textbf{(km/s)} \\
+\midrule
+10 kg & 1 C & 1.072 & 0.107 & 64.8 \\
+10 kg & 3 C & 3.214 & 0.321 & 194.4 \\
+10 kg & 5 C & 5.357 & 0.536 & 324.0 \\
+\midrule
+25 kg & 1 C & 1.072 & 0.043 & 25.9 \\
+25 kg & 3 C & 3.214 & 0.129 & 77.8 \\
+25 kg & 5 C & 5.357 & 0.214 & 129.6 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{block}{Observations}
+\begin{itemize}
+    \item Force scales linearly with charge
+    \item Force independent of chaser mass
+    \item Acceleration inversely proportional to mass
+\end{itemize}
+\end{block}
+\end{frame}
+
+%================================================================================
+% MISSION TIMELINE
+%================================================================================
+\begin{frame}{Mission Timeline Analysis}
+\begin{columns}[t]
+\column{0.5\textwidth}
+\begin{block}{Rendezvous Phase}
+\textbf{10kg, 5C Configuration:}
+\begin{itemize}
+    \item Hohmann Transfer: 47.2 min
+    \item Approach (10km$\rightarrow$50m): 4.5 min
+    \item Proximity (50m$\rightarrow$5m): 0.3 min
+    \item Detumbling: 30.0 min
+    \item Capture: 0.1 min
+\end{itemize}
+\textbf{Total: 1.37 hours}
+\end{block}
+
+\vspace{0.3cm}
+
+\textbf{Deorbit Phase:}
+\begin{itemize}
+    \item Burn: 18.3 min (10kg-5C)
+    \item Atmospheric decay: 2.0 days
+\end{itemize}
+
+\column{0.5\textwidth}
+\begin{block}{Complete Mission}
+\begin{table}
+\tiny
+\begin{tabular}{lcr}
+\toprule
+\textbf{Config} & \textbf{Rendez.} & \textbf{Mission} \\
+ & \textbf{(hr)} & \textbf{(days)} \\
+\midrule
+10kg, 1C & 1.47 & 2.12 \\
+10kg, 3C & 1.39 & 2.08 \\
+10kg, 5C & 1.37 & 2.07 \\
+25kg, 1C & 1.57 & 2.14 \\
+25kg, 3C & 1.45 & 2.09 \\
+25kg, 5C & 1.42 & 2.07 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{block}
+
+\textbf{Total Mission: 2.07 days}
+
+\vspace{0.2cm}
+
+Mission phases:
+\begin{enumerate}
+    \item Transfer to target orbit
+    \item Approach and proximity
+    \item Detumbling
+    \item Capture
+    \item Deorbit burn
+    \item Atmospheric decay
+\end{enumerate}
+\end{columns}
+\end{frame}
+
+%================================================================================
+% ENERGY ANALYSIS
+%================================================================================
+\begin{frame}{Energy Requirements \& Budget}
+\begin{columns}[t]
+\column{0.5\textwidth}
+\begin{block}{Energy per Configuration}
+\small
+\begin{tabular}{ccc}
+\toprule
+\textbf{Charge} & \textbf{Total} & \textbf{Power} \\
+\textbf{(C)} & \textbf{(kJ)} & \textbf{(W)} \\
+\midrule
+1 & 3.0 & 0.83 \\
+2 & 12.0 & 3.33 \\
+3 & 27.0 & 7.50 \\
+4 & 48.0 & 13.33 \\
+5 & 75.0 & 20.83 \\
+\bottomrule
+\end{tabular}
+\end{block}
+
+\textbf{Capacitance:} 1 mF\\
+\textbf{Voltage:} 1-5 kV\\
+\textbf{Energy storage:} $E = \frac{Q^2}{2C}$
+
+\column{0.5\textwidth}
+\begin{block}{Energy Budget}
+\textbf{Available:} 500 MJ\\
+\textbf{Max use (5C):} 75 kJ\\
+\textbf{Percentage:} 0.015\%\\
+\textbf{Margin:} 99.985\%
+\end{block}
+
+\textbf{Mission Capacity:}
+\begin{itemize}
+    \item Charge cycles possible: 6,666
+    \item Estimated missions/chaser: 100+
+    \item Energy not a limiting factor
+    \item Solar recharging possible
+\end{itemize}
+
+\begin{block}{Power Requirements}
+Maximum power for charging: 20.83 W\\
+Achievable with standard solar panels
+\end{block}
+\end{columns}
+\end{frame}
+
+%================================================================================
+% CONFIGURATION ANALYSIS
+%================================================================================
+\begin{frame}{Configuration Comparison}
+\begin{columns}[t]
+\column{0.33\textwidth}
+\begin{block}{10kg, 5C}
+\textbf{Performance:}
+\begin{itemize}
+    \item Rendezvous: 1.37 hr
+    \item Mission: 2.07 days
+    \item Accel: 0.536 m/s$^2$
+    \item $\Delta v$: 324 km/s/wk
+\end{itemize}
+
+\textbf{Characteristics:}
+\begin{itemize}
+    \item Lightest option
+    \item Highest acceleration
+    \item Fastest completion
+\end{itemize}
+\end{block}
+
+\column{0.33\textwidth}
+\begin{block}{25kg, 3C}
+\textbf{Performance:}
+\begin{itemize}
+    \item Rendezvous: 1.45 hr
+    \item Mission: 2.09 days
+    \item Accel: 0.129 m/s$^2$
+    \item More mass margin
+\end{itemize}
+
+\textbf{Characteristics:}
+\begin{itemize}
+    \item Balanced approach
+    \item Room for sensors
+    \item Moderate power
+\end{itemize}
+\end{block}
+
+\column{0.33\textwidth}
+\begin{block}{10kg, 1C}
+\textbf{Performance:}
+\begin{itemize}
+    \item Rendezvous: 1.47 hr
+    \item Mission: 2.12 days
+    \item Power: 0.83 W
+    \item Lowest energy
+\end{itemize}
+
+\textbf{Characteristics:}
+\begin{itemize}
+    \item Minimal power
+    \item Conservative
+    \item Long campaigns
+\end{itemize}
+\end{block}
+\end{columns}
+
+\vspace{0.5cm}
+\centering
+All configurations complete mission in 2.07-2.14 days
+\end{frame}
+
+%================================================================================
+% ALTITUDE EFFECTS
+%================================================================================
+\begin{frame}{Altitude Performance}
+\begin{table}
+\centering
+\caption{Force at Different Altitudes (5 C/shell)}
+\begin{tabular}{ccccc}
+\toprule
+\textbf{Altitude} & \textbf{B-field} & \textbf{Force} & \textbf{10kg Accel} & \textbf{25kg Accel} \\
+\textbf{(km)} & \textbf{($\mu$T)} & \textbf{(N)} & \textbf{(m/s$^2$)} & \textbf{(m/s$^2$)} \\
+\midrule
+400 & $\sim$50 & 5.932 & 0.593 & 0.237 \\
+600 & $\sim$45 & 5.357 & 0.536 & 0.214 \\
+800 & $\sim$40 & 4.852 & 0.485 & 0.194 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vspace{0.5cm}
+
+\begin{block}{Observations}
+\begin{itemize}
+    \item Force decreases $\sim$10\% per 200 km altitude gain
+    \item Correlation with magnetic field strength
+    \item Performance remains adequate across LEO range
+    \item System functional at 400-800 km
+\end{itemize}
+\end{block}
+\end{frame}
+
+%================================================================================
+% DELTA-V ACCUMULATION
+%================================================================================
+\begin{frame}{Delta-v Accumulation Over Time}
+\begin{table}
+\centering
+\caption{10kg Chaser Performance}
+\small
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Duration} & \textbf{1 C} & \textbf{3 C} & \textbf{5 C} \\
+\midrule
+1 hour & 0.39 km/s & 1.16 km/s & 1.93 km/s \\
+6 hours & 2.31 km/s & 6.94 km/s & 11.57 km/s \\
+1 day & 9.26 km/s & 27.77 km/s & 46.29 km/s \\
+1 week & 64.80 km/s & 194.41 km/s & 324.01 km/s \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vspace{0.3cm}
+
+\begin{table}
+\centering
+\caption{25kg Chaser Performance}
+\small
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Duration} & \textbf{1 C} & \textbf{3 C} & \textbf{5 C} \\
+\midrule
+1 hour & 0.15 km/s & 0.46 km/s & 0.77 km/s \\
+6 hours & 0.93 km/s & 2.78 km/s & 4.63 km/s \\
+1 day & 3.70 km/s & 11.11 km/s & 18.51 km/s \\
+1 week & 25.92 km/s & 77.76 km/s & 129.60 km/s \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{frame}
+
+%================================================================================
+% TORQUE ANALYSIS
+%================================================================================
+\begin{frame}{Torque Generation Analysis}
+\begin{columns}[t]
+\column{0.5\textwidth}
+\begin{block}{Current Results}
+\textbf{Shell Separation:} 0.5-5 m\\
+\textbf{Charge Levels:} 1-5 C
+
+\vspace{0.2cm}
+Torque measurements show minimal values in tested configuration.
+\end{block}
+
+\begin{block}{Physics}
+Torque: $\tau = \vec{r} \times \vec{F}$
+
+\vspace{0.2cm}
+Larger separation increases torque proportionally.
+\end{block}
+
+\column{0.5\textwidth}
+\begin{block}{Optimization Paths}
+\textbf{Increase Separation:}
+\begin{itemize}
+    \item Deploy to 10-20 m
+    \item Use extendable booms
+    \item 2-4$\times$ torque increase
+\end{itemize}
+
+\vspace{0.2cm}
+\textbf{Charge Distribution:}
+\begin{itemize}
+    \item Non-symmetric patterns
+    \item Dynamic modulation
+    \item 3D shell arrangements
+\end{itemize}
+\end{block}
+
+\textbf{Status:}\\
+Detumbling achievable with geometry optimization
+\end{columns}
+\end{frame}
+
+%================================================================================
+% MISSION PHASES
+%================================================================================
+\begin{frame}{Mission Phase Details}
+\begin{table}
+\centering
+\caption{Phase Breakdown (10kg, 5C Configuration)}
+\scriptsize
+\begin{tabular}{llll}
+\toprule
+\textbf{Phase} & \textbf{Duration} & \textbf{Control Method} & \textbf{Charge Strategy} \\
+\midrule
+1. Transfer & 47.2 min & Thrust vectoring & Uniform +5C all shells \\
+2. Approach & 4.5 min & Trajectory guidance & Differential charging \\
+3. Proximity & 0.3 min & Precision positioning & Low charge (0.1-1C) \\
+4. Detumbling & 30.0 min & Torque generation & Opposing pairs (±5C) \\
+5. Capture & 0.1 min & Velocity matching & Minimal (0.01-0.1C) \\
+6. Deorbit & 18.3 min & Combined thrust & Full charge all shells \\
+7. Decay & 2.0 days & Passive & No actuation \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vspace{0.3cm}
+
+\textbf{Control Capabilities:}
+\begin{itemize}
+    \item 3-axis translation (differential charging of ±x, ±y, ±z pairs)
+    \item 3-axis rotation (torque from force couples)
+    \item Variable thrust (charge modulation 0-5 C)
+    \item Station-keeping (continuous small adjustments)
+\end{itemize}
+\end{frame}
+
+%================================================================================
+% DEBRIS CAPTURE
+%================================================================================
+\begin{frame}{Debris Capture Method}
+\begin{columns}[t]
+\column{0.5\textwidth}
+\begin{block}{Capture Sequence}
+\textbf{After Detumbling:}
+\begin{enumerate}
+    \item Position at 5m from debris
+    \item Visual inspection
+    \item Final approach to 1m
+    \item Deploy robotic arm
+    \item Grapple debris structure
+    \item Retract arm
+    \item Engage secondary hold
+    \item Mechanical lock
+\end{enumerate}
+\textbf{Duration: $\sim$6 minutes}
+\end{block}
+
+\column{0.5\textwidth}
+\begin{block}{Capture Systems}
+\textbf{Primary:} Robotic grapple arm
+\begin{itemize}
+    \item Mass: 5-10 kg
+    \item Grip strength: 100+ N
+    \item 3-5 DOF
+\end{itemize}
+
+\vspace{0.2cm}
+\textbf{Secondary:} Electrostatic adhesion
+\begin{itemize}
+    \item Mass: 2-3 kg
+    \item Holding force: 50-100 N
+    \item Uses HV infrastructure
+\end{itemize}
+\end{block}
+
+\textbf{Safety Factor:}
+\begin{itemize}
+    \item Total holding: 150-200 N
+    \item Applied force: 5 N
+    \item Factor: 30-40$\times$
+\end{itemize}
+\end{columns}
+\end{frame}
+
+%================================================================================
+% SYSTEM SPECIFICATIONS
+%================================================================================
+\begin{frame}{System Specifications}
+\begin{columns}[t]
+\column{0.5\textwidth}
+\begin{block}{Chaser Spacecraft}
+\textbf{Mass Options:}
+\begin{itemize}
+    \item 10 kg (lightweight)
+    \item 25 kg (with margin)
+\end{itemize}
+
+\vspace{0.2cm}
+\textbf{Propulsion System:}
+\begin{itemize}
+    \item 6 Coulomb shells
+    \item Charge: 1-5 C per shell
+    \item Separation: 0.5-20 m
+    \item Force output: 1-5 N
+\end{itemize}
+
+\vspace{0.2cm}
+\textbf{Power System:}
+\begin{itemize}
+    \item Capacitor bank: 1 mF
+    \item Voltage: 1-5 kV
+    \item Solar panels: 25-50 W
+    \item Battery: 500 MJ capacity
+\end{itemize}
+\end{block}
+
+\column{0.5\textwidth}
+\begin{block}{Performance}
+\textbf{Thrust:}
+\begin{itemize}
+    \item Range: 0-5 N
+    \item Modulation: Continuous
+    \item Direction: 3-axis
+\end{itemize}
+
+\vspace{0.2cm}
+\textbf{Mission Capability:}
+\begin{itemize}
+    \item Altitude: 400-800 km
+    \item Target mass: 50 kg
+    \item Duration: 2.07-2.14 days
+    \item Reusability: 100+ missions
+\end{itemize}
+
+\vspace{0.2cm}
+\textbf{Precision:}
+\begin{itemize}
+    \item Position: cm-level
+    \item Velocity: mm/s level
+    \item Force: mN resolution
+\end{itemize}
+\end{block}
+\end{columns}
+\end{frame}
+
+%================================================================================
+% RESULTS SUMMARY
+%================================================================================
+\begin{frame}{Results Summary}
+\begin{block}{Performance Achieved}
+\begin{itemize}
+    \item Mission duration: 2.07-2.14 days
+    \item Rendezvous time: 1.37-1.57 hours
+    \item Force output: 1-5 N (linear with charge)
+    \item Energy margin: 99.985\%
+    \item Reusable: 100+ missions per chaser
+\end{itemize}
+\end{block}
+
+\begin{block}{System Characteristics}
+\begin{itemize}
+    \item No propellant consumption ($I_{sp} = \infty$)
+    \item No moving parts in propulsion system
+    \item Passive interaction with magnetic field
+    \item Charge modulation for thrust control
+    \item Solar-rechargeable energy system
+\end{itemize}
+\end{block}
+
+\begin{block}{Mission Phases Validated}
+All mission phases analyzed: Transfer, Approach, Proximity, Detumbling, Capture, Deorbit, Decay
+\end{block}
+\end{frame}
+
+%================================================================================
+% DEVELOPMENT PATH
+%================================================================================
+\begin{frame}{Development Pathway}
+\begin{block}{Phase 1: Ground Testing (Year 1)}
+\begin{itemize}
+    \item Capacitor bank development
+    \item Charge management circuits
+    \item Control algorithm simulation
+    \item Component testing
+\end{itemize}
+\end{block}
+
+\begin{block}{Phase 2: Lab Demonstration (Year 2)}
+\begin{itemize}
+    \item Integrated system testing
+    \item Magnetic field simulation chamber
+    \item Charge management validation
+    \item Performance characterization
+\end{itemize}
+\end{block}
+
+\begin{block}{Phase 3: Space Qualification (Year 3)}
+\begin{itemize}
+    \item Thermal/vacuum testing
+    \item Radiation testing
+    \item Flight certification
+\end{itemize}
+\end{block}
+
+\begin{block}{Phase 4: Flight Demonstration (Year 4)}
+\begin{itemize}
+    \item CubeSat mission
+    \item On-orbit validation
+\end{itemize}
+\end{block}
+\end{frame}
+
+%================================================================================
+% DATA AVAILABILITY
+%================================================================================
+\begin{frame}{Available Data}
+\begin{block}{Test Results}
+\textbf{Data Files:}
+\begin{itemize}
+    \item \texttt{high\_charge\_variable\_separation\_results.json}
+    \item \texttt{mission\_timelines.json}
+\end{itemize}
+\end{block}
+
+\begin{block}{Documentation}
+\textbf{Analysis Documents:}
+\begin{itemize}
+    \item Comprehensive Presentation (13 pages)
+    \item Executive Summary
+    \item Quick Reference Card
+    \item Detailed Comparison Tables (15 tables)
+\end{itemize}
+
+\vspace{0.2cm}
+\textbf{Visualizations:}
+\begin{itemize}
+    \item 10 comprehensive figures (300 DPI)
+    \item Performance charts
+    \item Timeline visualizations
+\end{itemize}
+\end{block}
+
+\begin{block}{Contact}
+IIT Kanpur Research Hackathon 2025\\
+November 9, 2025
+\end{block}
+\end{frame}
+
+\end{document}

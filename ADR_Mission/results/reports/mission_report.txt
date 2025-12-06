@@ -1,0 +1,68 @@
+================================================================================
+ACTIVE DEBRIS REMOVAL MISSION REPORT
+IIT Kanpur Research Hackathon 2025
+================================================================================
+
+Mission Date: 2025-11-09 04:30:07
+
+--------------------------------------------------------------------------------
+PHASE 1: HOHMANN TRANSFER (COULOMB FORCES)
+--------------------------------------------------------------------------------
+  First burn (Δv₁):         55.63 m/s
+  Second burn (Δv₂):        55.23 m/s
+  Total Δv:                110.86 m/s
+  Transfer time:             47.2 minutes
+  Energy used:               7.80 MJ
+  Energy remaining:        492.20 MJ
+
+--------------------------------------------------------------------------------
+PHASE 2: FAR-RANGE APPROACH (COULOMB TRACTOR)
+--------------------------------------------------------------------------------
+  Final position error:     34.17 m
+  Final velocity error:    987.11 mm/s
+  Total Δv:               2747.96 m/s
+  Energy used:               0.00 MJ
+  Energy remaining:        492.20 MJ
+
+--------------------------------------------------------------------------------
+PHASE 3: PROXIMITY OPERATIONS (COULOMB FORCES)
+--------------------------------------------------------------------------------
+  Final position error:      1.20 m
+  Final velocity error:     38.23 mm/s
+  Total Δv:                 19.73 m/s
+  Energy used:               0.02 MJ
+  Energy remaining:        492.17 MJ
+
+--------------------------------------------------------------------------------
+PHASE 4: ACTIVE DETUMBLING
+--------------------------------------------------------------------------------
+  Initial tumbling:        0.1871 rad/s
+  Final tumbling:          0.0001 rad/s
+  Target tumbling:         0.0100 rad/s
+
+--------------------------------------------------------------------------------
+PHASE 5: CAPTURE (COULOMB TRACTOR)
+--------------------------------------------------------------------------------
+  Final separation:          0.26 m
+  Final velocity:            0.00 m/s
+  Energy used:               0.00 MJ
+  Energy remaining:        492.17 MJ
+
+--------------------------------------------------------------------------------
+PHASE 6: DEORBIT (COULOMB TRACTOR)
+--------------------------------------------------------------------------------
+  Deorbit Δv:               97.99 m/s
+  Energy required:           6.34 MJ
+  Energy remaining:        485.83 MJ
+
+================================================================================
+MISSION SUMMARY
+================================================================================
+  Total Δv:               2976.55 m/s
+  Total energy consumed:    14.17 MJ
+  Initial energy:          500.00 MJ
+  Energy margin:             97.2%
+
+  🚀 COULOMB FORCE PROPULSION - ZERO CHEMICAL FUEL USED!
+
+================================================================================

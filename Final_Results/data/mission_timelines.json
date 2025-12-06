@@ -1,0 +1,284 @@
+{
+  "10kg_1C": {
+    "phase1_transfer": {
+      "burn1_dv": 0.055631488352018366,
+      "burn1_time": 519.2106404829669,
+      "coast_time": 1799.4174001313447,
+      "burn2_dv": 0.05522809054387601,
+      "burn2_time": 515.445714529347,
+      "total_time": 2834.0737551436587
+    },
+    "phase2_approach": {
+      "distance": 10.0,
+      "final_velocity": 1.0,
+      "time": 601.6672995145665
+    },
+    "phase3_proximity": {
+      "distance": 0.045,
+      "final_velocity": 0.1,
+      "time": 40.05384496003988
+    },
+    "phase4_detumble": {
+      "time": 1800,
+      "note": "Conservative estimate - depends on torque optimization"
+    },
+    "phase5_capture": {
+      "distance": 0.005,
+      "final_velocity": 0.01,
+      "time": 13.569052475294498
+    },
+    "total_rendezvous": {
+      "seconds": 5289.363952093559,
+      "hours": 1.4692677644704333,
+      "days": 0.06121949018626805
+    },
+    "phase6_deorbit": {
+      "burn_dv": 0.09799388996318825,
+      "burn_time": 5487.48256195361,
+      "decay_time": 172800.0,
+      "total_time": 178287.4825619536,
+      "combined_mass": 60,
+      "combined_acceleration": 0.017857713233133492
+    },
+    "total_mission": {
+      "seconds": 183576.84651404715,
+      "hours": 50.99356847612421,
+      "days": 2.124732019838509
+    }
+  },
+  "10kg_3C": {
+    "phase1_transfer": {
+      "burn1_dv": 0.055631488352018366,
+      "burn1_time": 173.07021349432227,
+      "coast_time": 2489.1883034728876,
+      "burn2_dv": 0.05522809054387601,
+      "burn2_time": 171.815238176449,
+      "total_time": 2834.0737551436587
+    },
+    "phase2_approach": {
+      "distance": 10.0,
+      "final_velocity": 1.0,
+      "time": 349.6501959954998
+    },
+    "phase3_proximity": {
+      "distance": 0.045,
+      "final_velocity": 0.1,
+      "time": 23.352840035575525
+    },
+    "phase4_detumble": {
+      "time": 1800,
+      "note": "Conservative estimate - depends on torque optimization"
+    },
+    "phase5_capture": {
+      "distance": 0.005,
+      "final_velocity": 0.01,
+      "time": 7.856870285841133
+    },
+    "total_rendezvous": {
+      "seconds": 5014.9336614605745,
+      "hours": 1.393037128183493,
+      "days": 0.058043213674312207
+    },
+    "phase6_deorbit": {
+      "burn_dv": 0.09799388996318825,
+      "burn_time": 1829.1608539845363,
+      "decay_time": 172800.0,
+      "total_time": 174629.16085398453,
+      "combined_mass": 60,
+      "combined_acceleration": 0.05357313969940048
+    },
+    "total_mission": {
+      "seconds": 179644.09451544512,
+      "hours": 49.901137365401425,
+      "days": 2.079214056891726
+    }
+  },
+  "10kg_5C": {
+    "phase1_transfer": {
+      "burn1_dv": 0.055631488352018366,
+      "burn1_time": 103.84212809659341,
+      "coast_time": 2627.142484141196,
+      "burn2_dv": 0.05522809054387601,
+      "burn2_time": 103.08914290586942,
+      "total_time": 2834.0737551436587
+    },
+    "phase2_approach": {
+      "distance": 10.0,
+      "final_velocity": 1.0,
+      "time": 271.38104950589
+    },
+    "phase3_proximity": {
+      "distance": 0.045,
+      "final_velocity": 0.1,
+      "time": 18.14334933770037
+    },
+    "phase4_detumble": {
+      "time": 1800,
+      "note": "Conservative estimate - depends on torque optimization"
+    },
+    "phase5_capture": {
+      "distance": 0.005,
+      "final_velocity": 0.01,
+      "time": 6.091337276956365
+    },
+    "total_rendezvous": {
+      "seconds": 4929.689491264206,
+      "hours": 1.3693581920178348,
+      "days": 0.05705659133407645
+    },
+    "phase6_deorbit": {
+      "burn_dv": 0.09799388996318825,
+      "burn_time": 1097.4965123907223,
+      "decay_time": 172800.0,
+      "total_time": 173897.49651239073,
+      "combined_mass": 60,
+      "combined_acceleration": 0.08928856616566744
+    },
+    "total_mission": {
+      "seconds": 178827.18600365493,
+      "hours": 49.674218334348595,
+      "days": 2.069759097264525
+    }
+  },
+  "25kg_1C": {
+    "phase1_transfer": {
+      "burn1_dv": 0.055631488352018366,
+      "burn1_time": 1298.0266012074173,
+      "coast_time": 247.4328676128739,
+      "burn2_dv": 0.05522809054387601,
+      "burn2_time": 1288.6142863233674,
+      "total_time": 2834.0737551436587
+    },
+    "phase2_approach": {
+      "distance": 10.0,
+      "final_velocity": 1.0,
+      "time": 942.7437663874374
+    },
+    "phase3_proximity": {
+      "distance": 0.045,
+      "final_velocity": 0.1,
+      "time": 62.47311319379719
+    },
+    "phase4_detumble": {
+      "time": 1800,
+      "note": "Conservative estimate - depends on torque optimization"
+    },
+    "phase5_capture": {
+      "distance": 0.005,
+      "final_velocity": 0.01,
+      "time": 21.368798119468742
+    },
+    "total_rendezvous": {
+      "seconds": 5660.6594328443625,
+      "hours": 1.572405398012323,
+      "days": 0.06551689158384678
+    },
+    "phase6_deorbit": {
+      "burn_dv": 0.09799388996318825,
+      "burn_time": 6859.353202442012,
+      "decay_time": 172800.0,
+      "total_time": 179659.353202442,
+      "combined_mass": 75,
+      "combined_acceleration": 0.014286170586506794
+    },
+    "total_mission": {
+      "seconds": 185320.01263528637,
+      "hours": 51.477781287579546,
+      "days": 2.1449075536491478
+    }
+  },
+  "25kg_3C": {
+    "phase1_transfer": {
+      "burn1_dv": 0.055631488352018366,
+      "burn1_time": 432.6755337358057,
+      "coast_time": 1971.8601259667303,
+      "burn2_dv": 0.05522809054387601,
+      "burn2_time": 429.53809544112244,
+      "total_time": 2834.0737551436587
+    },
+    "phase2_approach": {
+      "distance": 10.0,
+      "final_velocity": 1.0,
+      "time": 549.9869139460529
+    },
+    "phase3_proximity": {
+      "distance": 0.045,
+      "final_velocity": 0.1,
+      "time": 36.638223384095184
+    },
+    "phase4_detumble": {
+      "time": 1800,
+      "note": "Conservative estimate - depends on torque optimization"
+    },
+    "phase5_capture": {
+      "distance": 0.005,
+      "final_velocity": 0.01,
+      "time": 12.394216812988288
+    },
+    "total_rendezvous": {
+      "seconds": 5233.093109286795,
+      "hours": 1.4536369748018876,
+      "days": 0.06056820728341198
+    },
+    "phase6_deorbit": {
+      "burn_dv": 0.09799388996318825,
+      "burn_time": 2286.45106748067,
+      "decay_time": 172800.0,
+      "total_time": 175086.45106748067,
+      "combined_mass": 75,
+      "combined_acceleration": 0.04285851175952039
+    },
+    "total_mission": {
+      "seconds": 180319.54417676746,
+      "hours": 50.0887622713243,
+      "days": 2.087031761305179
+    }
+  },
+  "25kg_5C": {
+    "phase1_transfer": {
+      "burn1_dv": 0.055631488352018366,
+      "burn1_time": 259.6053202414835,
+      "coast_time": 2316.7455776375014,
+      "burn2_dv": 0.05522809054387601,
+      "burn2_time": 257.72285726467356,
+      "total_time": 2834.0737551436587
+    },
+    "phase2_approach": {
+      "distance": 10.0,
+      "final_velocity": 1.0,
+      "time": 427.37596238937493
+    },
+    "phase3_proximity": {
+      "distance": 0.045,
+      "final_velocity": 0.1,
+      "time": 28.51563887228156
+    },
+    "phase4_detumble": {
+      "time": 1800,
+      "note": "Conservative estimate - depends on torque optimization"
+    },
+    "phase5_capture": {
+      "distance": 0.005,
+      "final_velocity": 0.01,
+      "time": 9.614098368401123
+    },
+    "total_rendezvous": {
+      "seconds": 5099.579454773716,
+      "hours": 1.4165498485482544,
+      "days": 0.059022910356177266
+    },
+    "phase6_deorbit": {
+      "burn_dv": 0.09799388996318825,
+      "burn_time": 1371.8706404884028,
+      "decay_time": 172800.0,
+      "total_time": 174171.8706404884,
+      "combined_mass": 75,
+      "combined_acceleration": 0.07143085293253394
+    },
+    "total_mission": {
+      "seconds": 179271.45009526212,
+      "hours": 49.7976250264617,
+      "days": 2.0749010427692376
+    }
+  }
+}
