@@ -1,0 +1,11 @@
+Test Case,Final Distance (m),Final Velocity (m/s),Convergence Time (min),Status
+Nominal,0.162,0.0998,40.2,
+Close Start (5km),0.981,0.0552,39.8,
+Far Start (20km),0.989,0.0610,48.0,
+Low Altitude (400km),0.496,0.0999,39.4,
+High Altitude (600km),0.255,0.0998,41.0,
+Heavy Debris (20kg),0.162,0.0998,40.2,
+Light Debris (5kg),0.162,0.0998,40.2,
+Conservative Gains,0.976,0.0991,61.1,
+Aggressive Gains,0.969,0.0785,25.5,
+Worst Case,0.975,0.0602,48.9,

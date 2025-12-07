@@ -1,0 +1,11 @@
+Test Case,Final Distance (m),Final Velocity (m/s),Convergence Time (min),Mean Force (mN),Status
+Nominal,9505.76,0.0587,-1.0,5.97,FAIL
+Low Debris Charge,9501.28,0.0587,-1.0,1.00,FAIL
+High Debris Charge,9527.25,0.0590,-1.0,29.83,FAIL
+Close Start (5km),4524.73,0.0590,-1.0,26.54,FAIL
+Far Start (20km),19504.44,0.0587,-1.0,4.73,FAIL
+Heavy Debris (20kg),9505.76,0.0587,-1.0,5.97,FAIL
+Light Debris (5kg),9505.76,0.0587,-1.0,5.97,FAIL
+Low Altitude (400km),9505.84,0.0400,-1.0,5.97,FAIL
+High Altitude (600km),9505.67,0.0738,-1.0,5.97,FAIL
+Worst Case,19501.42,0.0738,-1.0,1.42,FAIL
